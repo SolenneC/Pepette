@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Odyssée - Protocole Égée</title>
+<style>
+    * {
+        box-sizing: border-box;
+    }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        background-color: #0f172a;
+        color: #f8fafc;
+        margin: 0;
+        padding: 15px;
+        display: flex;
+        justify-content: center;
+    }
+    .app-container {
+        width: 100%;
+        max-width: 500px; /* Taille optimale sur smartphone */
+        background: #1e293b;
+        border-radius: 20px;
+        padding: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        border: 1px solid #334155;
+    }
+    h1 {
+        color: #38bdf8;
+        text-align: center;
+        font-size: 1.6em;
+        margin-top: 0;
+        margin-bottom: 5px;
+    }
+    .subtitle {
+        text-align: center;
+        color: #94a3b8;
+        font-size: 0.9em;
+        margin-bottom: 20px;
+    }
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+    .card {
+        background: #0f172a;
+        border: 2px solid #334155;
+        border-radius: 12px;
+        padding: 15px 5px;
+        text-align: center;
+        cursor: pointer;
+        user-select: none;
+        transition: transform 0.1s;
+    }
+    .card:active {
+        transform: scale(0.96);
+    }
+    .card.unlocked {
+        border-color: #22c55e;
+        background: #064e3b;
+    }
+    .card-title {
+        font-weight: bold;
+        font-size: 0.9em;
+        color: #f8fafc;
+    }
+    .card-status {
+        font-size: 1.2em;
+        margin-top: 5px;
+    }
+    .btn {
+        display: block;
+        width: 100%;
+        padding: 16px;
+        margin: 12px 0;
+        border: none;
+        background: #38bdf8;
+        color: #0f172a;
+        font-size: 1.1em;
+        font-weight: bold;
+        border-radius: 12px;
+        cursor: pointer;
+        text-align: center;
+    }
+    .btn:active {
+        opacity: 0.8;
+    }
+    .btn-secondary {
+        background: #475569;
+        color: #f8fafc;
+    }
+    .btn-success {
+        background: #22c55e;
+        color: #0f172a;
+    }
+    .hidden {
+        display: none !important;
+    }
+    .input-code {
+        width: 100%;
+        padding: 15px;
+        font-size: 1.3em;
+        text-align: center;
+        border-radius: 10px;
+        border: 2px solid #38bdf8;
+        background: #0f172a;
+        color: #fff;
+        letter-spacing: 2px;
+        margin: 15px 0;
+        text-transform: uppercase;
+    }
+    .story-box {
+        background: #0f172a;
+        border-left: 4px solid #38bdf8;
+        padding: 15px;
+        border-radius: 8px;
+        line-height: 1.6;
+        font-size: 1.05em;
+        margin: 15px 0;
+    }
+    .error-msg {
+        color: #f43f5e;
+        text-align: center;
+        font-weight: bold;
+        margin-top: 10px;
+    }
+</style>
+</head>
+<body>
+
+<div class="app-container">
+    
+    <!-- ACCUEIL : LISTE DES 12 SÉANCES -->
+    <div id="viewHome">
+        <h1>🚀 ODYSSÉE ÉGÉE</h1>
+        <div class="subtitle">12 étapes vers la victoire</div>
+        <div class="grid" id="gridContainer"></div>
+    </div>
+
+    <!-- DÉVERROUILLAGE PAR CODE SECRET -->
+    <div id="viewLock" class="hidden">
+        <h2 style="text-align: center; color: #38bdf8;" id="lockTitle">Séance</h2>
+        <p style="text-align: center;">Entrez le code transmis par SMS pour ouvrir ce chapitre :</p>
+        <input type="text" id="codeField" class="input-code" placeholder="CODE SECRET" autocomplete="off">
+        <button class="btn" onclick="validateCode()">DÉBLOQUER</button>
+        <div id="errorText" class="error-msg"></div>
+        <button class="btn btn-secondary" onclick="goHome()" style="margin-top: 20px;">⬅️ RETOUR</button>
+    </div>
+
+    <!-- ÉCRAN DU CHAPITRE -->
+    <div id="viewChapter" class="hidden">
+        <h2 style="color: #38bdf8; margin-top: 0;" id="chapterTitle"></h2>
+        
+        <!-- CHOIX MODE LECTURE OU ÉCOUTE -->
+        <div id="modeChoice">
+            <p><strong>Comment veux-tu découvrir ce chapitre ?</strong></p>
+            <button class="btn" onclick="openTextMode()">📖 LIRE</button>
+            <button class="btn btn-success" onclick="openAudioMode()">🎧 ÉCOUTER (AUDIO)</button>
+        </div>
+
+        <!-- AFFICHAGE TEXTE -->
+        <div id="textSection" class="story-box hidden"></div>
+
+        <!-- AFFICHAGE AUDIO -->
+        <div id="audioSection" class="story-box hidden" style="text-align: center;">
+            <p>📻 <em>Lecture audio du chapitre :</em></p>
+            <button class="btn" id="btnPlayVoice" onclick="playNativeVoice()">▶️ LANCER LA LECTURE</button>
+            <button class="btn btn-secondary hidden" id="btnStopVoice" onclick="stopNativeVoice()">⏹️ ARRÊTER</button>
+        </div>
+
+        <button class="btn btn-secondary" onclick="goHome()" style="margin-top: 20px;">⬅️ REVENIR AUX SÉANCES</button>
+    </div>
+
+</div>
+
+<script>
+// 1. CODES SECRETS POUR CHAQUE SÉANCE (TU PEUX LES CHANGER)
+const CODES = {
+    1: "EGEE01",
+    2: "EGEE02",
+    3: "EGEE03",
+    4: "EGEE04",
+    5: "EGEE05",
+    6: "EGEE06",
+    7: "EGEE07",
+    8: "EGEE08",
+    9: "EGEE09",
+    10: "EGEE10",
+    11: "EGEE11",
+    12: "EGEE12"
+};
+
+// 2. TEXTES DES 12 CHAPITRES DE L'HISTOIRE
+const CHAPTERS = [
+    { title: "Épisode 1 : L'Appel du Labyrinthe", text: "Bienvenue Agent Sacha. Votre mission commence aujourd'hui au Port du Pirée. Une ancienne relique a été divisée en 12 fragments à travers toute la Grèce. Aujourd'hui, vous sécurisez le premier fragment." },
+    { title: "Épisode 2 : Les Ombres d'Olympie", text: "Deuxième étape. Les capteurs indiquent une présence étrange près du temple antique. Gardez votre calme, le deuxième fragment est à portée de main." },
+    { title: "Épisode 3 : Le Canal de Corinthe", text: "Troisième étape. Vous devez franchir le passage étroit. Votre détermination débloque l'accès au fragment suivant." },
+    { title: "Épisode 4 : Le Secret de Delphes", text: "Quatrième étape. L'oracle vous livre une partie du mystère. La moitié du premier quart du voyage est franchie !" },
+    { title: "Épisode 5 : Les Pics des Météores", text: "Cinquième étape. En haut de ces falaises, l'air est pur et la vue est dégagée. Le 5ème fragment brille intensément." },
+    { title: "Épisode 6 : La Tour Blanche (Mi-Parcours !)", text: "SIXIÈME ÉTAPE ! C'est la mi-parcours ! 6 fragments sur 12 sécurisés. Vous avez déjà parcouru la moitié du chemin !" },
+    { title: "Épisode 7 : Le Refuge de l'Olympe", text: "Septième étape. On entame la deuxième moitié du voyage. Les forces reviennent, le sommet n'a jamais été aussi proche." },
+    { title: "Épisode 8 : Le Labyrinthe de Crète", text: "Huitième étape. Vous connaissez maintenant le terrain. Rien ne peut vous désorienter." },
+    { title: "Épisode 9 : La Clarté de Santorin", text: "Neuvième étape. La lumière bleue du village éclaire la suite du chemin. Plus que 3 étapes !" },
+    { title: "Épisode 10 : Les Remparts de Rhodes", text: "Dixième étape. Cap franchi ! La forteresse est solide, tout comme votre progression." },
+    { title: "Épisode 11 : La Porte de Chypre", text: "ONZIÈME ÉTAPE. L'avant-dernière porte ! Tout est en place pour le grand final." },
+    { title: "Épisode 12 : La Victoire Finale", text: "DOUZIÈME ÉTAPE ! MISSION ACCOMPLIE ! Tous les fragments sont réunis. L'Odyssée est terminée avec un succès total !" }
+];
+
+// SAUVEGARDE SUR LE TÉLÉPHONE
+let unlockedList = JSON.parse(localStorage.getItem('unlocked_seances')) || [];
+let currentSelected = 1;
+
+function init() {
+    renderGrid();
+}
+
+function renderGrid() {
+    const container = document.getElementById('gridContainer');
+    container.innerHTML = '';
+    
+    for (let i = 1; i <= 12; i++) {
+        const isUnlocked = unlockedList.includes(i);
+        const card = document.createElement('div');
+        card.className = `card ${isUnlocked ? 'unlocked' : ''}`;
+        card.innerHTML = `
+            <div class="card-title">Séance ${i}</div>
+            <div class="card-status">${isUnlocked ? '🔓' : '🔒'}</div>
+        `;
+        card.onclick = () => selectCard(i, isUnlocked);
+        container.appendChild(card);
+    }
+}
+
+function selectCard(num, isUnlocked) {
+    currentSelected = num;
+    if (isUnlocked) {
+        showChapter();
+    } else {
+        showLock();
+    }
+}
+
+function showLock() {
+    document.getElementById('viewHome').className = 'hidden';
+    document.getElementById('viewLock').className = '';
+    document.getElementById('lockTitle').textContent = `Séance ${currentSelected}`;
+    document.getElementById('codeField').value = '';
+    document.getElementById('errorText').textContent = '';
+}
+
+function validateCode() {
+    const input = document.getElementById('codeField').value.trim().toUpperCase();
+    if (input === CODES[currentSelected]) {
+        if (!unlockedList.includes(currentSelected)) {
+            unlockedList.push(currentSelected);
+            localStorage.setItem('unlocked_seances', JSON.stringify(unlockedList));
+        }
+        showChapter();
+    } else {
+        document.getElementById('errorText').textContent = "Code incorrect ! Demande le code par SMS.";
+    }
+}
+
+function showChapter() {
+    document.getElementById('viewHome').className = 'hidden';
+    document.getElementById('viewLock').className = 'hidden';
+    document.getElementById('viewChapter').className = '';
+    
+    const ch = CHAPTERS[currentSelected - 1];
+    document.getElementById('chapterTitle').textContent = ch.title;
+    
+    // Réinitialiser les sections
+    document.getElementById('modeChoice').className = '';
+    document.getElementById('textSection').className = 'story-box hidden';
+    document.getElementById('audioSection').className = 'story-box hidden';
+    stopNativeVoice();
+}
+
+function openTextMode() {
+    document.getElementById('modeChoice').className = 'hidden';
+    const textSec = document.getElementById('textSection');
+    textSec.textContent = CHAPTERS[currentSelected - 1].text;
+    textSec.className = 'story-box';
+}
+
+function openAudioMode() {
+    document.getElementById('modeChoice').className = 'hidden';
+    document.getElementById('audioSection').className = 'story-box';
+}
+
+function playNativeVoice() {
+    stopNativeVoice();
+    const text = CHAPTERS[currentSelected - 1].text;
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'fr-FR';
+    utterance.rate = 0.9; // Vitesse légèrement adoucie
+    
+    utterance.onend = function() {
+        document.getElementById('btnPlayVoice').className = 'btn';
+        document.getElementById('btnStopVoice').className = 'btn btn-secondary hidden';
+    };
+
+    window.speechSynthesis.speak(utterance);
+    document.getElementById('btnPlayVoice').className = 'btn hidden';
+    document.getElementById('btnStopVoice').className = 'btn btn-secondary';
+}
+
+function stopNativeVoice() {
+    if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+    }
+    document.getElementById('btnPlayVoice').className = 'btn';
+    document.getElementById('btnStopVoice').className = 'btn btn-secondary hidden';
+}
+
+function goHome() {
+    stopNativeVoice();
+    document.getElementById('viewHome').className = '';
+    document.getElementById('viewLock').className = 'hidden';
+    document.getElementById('viewChapter').className = 'hidden';
+    renderGrid();
+}
+
+init();
+</script>
+</body>
+</html>
