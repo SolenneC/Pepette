@@ -12,7 +12,6 @@
       --text: #ffffff;
       --text-muted: #b0b0b0;
       --locked: #333333;
-      --success: #2ecc71;
       --error: #e74c3c;
     }
 
@@ -89,21 +88,6 @@
       text-transform: uppercase;
     }
 
-    textarea {
-      width: 100%;
-      height: 120px;
-      padding: 12px;
-      border-radius: 8px;
-      border: 1px solid #444;
-      background-color: #2a2a2a;
-      color: #fff;
-      font-size: 1rem;
-      margin-top: 10px;
-      box-sizing: border-box;
-      resize: vertical;
-      font-family: inherit;
-    }
-
     button {
       background-color: var(--accent);
       color: white;
@@ -120,24 +104,12 @@
 
     .tts-btn {
       background-color: #27ae60;
-      margin-top: 15px;
-    }
-
-    .save-notes-btn {
-      background-color: #8e44ad;
-      margin-top: 10px;
+      margin-top: 20px;
     }
 
     .error-msg {
       color: var(--error);
       margin-top: 10px;
-      font-size: 0.9rem;
-      display: none;
-    }
-
-    .save-status {
-      color: var(--success);
-      margin-top: 8px;
       font-size: 0.9rem;
       display: none;
     }
@@ -151,12 +123,6 @@
       border: 1px solid var(--text-muted);
       color: var(--text-muted);
       margin-bottom: 15px;
-    }
-
-    .notes-section {
-      margin-top: 25px;
-      padding-top: 15px;
-      border-top: 1px solid #333;
     }
   </style>
 </head>
@@ -188,19 +154,11 @@
       <h2 id="chapter-title"></h2>
       <div id="chapter-body" style="line-height: 1.6; font-size: 1.1rem; white-space: pre-line;"></div>
       <button class="tts-btn" onclick="toggleTTS()" id="tts-btn">🔊 ÉCOUTER LE TEXTE</button>
-
-      <!-- ZONE POUR ÉCRIRE SES IMPRESSIONS / NOTES -->
-      <div class="notes-section">
-        <h3>📝 Espace d'écriture :</h3>
-        <textarea id="user-notes" placeholder="Rédigez vos remarques, émotions, questions ou notes ici..."></textarea>
-        <button class="save-notes-btn" onclick="saveNotes()">Enregistrer mes notes</button>
-        <div id="save-status" class="save-status">✓ Notes enregistrées avec succès !</div>
-      </div>
     </div>
   </div>
 
   <script>
-    // Codes secrets simples en clair
+    // Codes secrets simples
     const PASSCODES = {
       1: "EGEE01",
       2: "HERA02",
@@ -216,55 +174,59 @@
       12: "AFRO12"
     };
 
-    // Textes des 12 séances (Remplacez le texte entre guillemets)
+    // =========================================================================
+    // COPIEZ ET COLLEZ VOS TEXTES DE RÉCIT ENTRE LES GUILLEMETS POUR CHAQUE SÉANCE
+    // Note : Pour faire un saut de ligne dans le texte, vous pouvez simplement
+    // taper Entrée si vous utilisez des accents graves `...` ou écrire \n
+    // =========================================================================
     const CHAPTERS = {
       1: { 
         title: "Séance 1 : L'Égée", 
-        text: "Écrivez ici le texte personnalisé pour la première séance de Sacha..." 
+        text: `Collez le texte du récit 1 ici.` 
       },
       2: { 
         title: "Séance 2 : Héra", 
-        text: "Écrivez ici le texte personnalisé pour la séance 2..." 
+        text: `Collez le texte du récit 2 ici.` 
       },
       3: { 
         title: "Séance 3 : Arès", 
-        text: "Écrivez ici le texte personnalisé pour la séance 3..." 
+        text: `Collez le texte du récit 3 ici.` 
       },
       4: { 
         title: "Séance 4 : Hestia", 
-        text: "Écrivez ici le texte personnalisé pour la séance 4..." 
+        text: `Collez le texte du récit 4 ici.` 
       },
       5: { 
         title: "Séance 5 : Zeus", 
-        text: "Écrivez ici le texte personnalisé pour la séance 5..." 
+        text: `Collez le texte du récit 5 ici.` 
       },
       6: { 
         title: "Séance 6 : Apollon", 
-        text: "Écrivez ici le texte personnalisé pour la séance 6..." 
+        text: `Collez le texte du récit 6 ici.` 
       },
       7: { 
         title: "Séance 7 : Artémis", 
-        text: "Écrivez ici le texte personnalisé pour la séance 7..." 
+        text: `Collez le texte du récit 7 ici.` 
       },
       8: { 
         title: "Séance 8 : Poseïdon", 
-        text: "Écrivez ici le texte personnalisé pour la séance 8..." 
+        text: `Collez le texte du récit 8 ici.` 
       },
       9: { 
         title: "Séance 9 : Déméter", 
-        text: "Écrivez ici le texte personnalisé pour la séance 9..." 
+        text: `Collez le texte du récit 9 ici.` 
       },
       10: { 
         title: "Séance 10 : Athéna", 
-        text: "Écrivez ici le texte personnalisé pour la séance 10..." 
+        text: `Collez le texte du récit 10 ici.` 
       },
       11: { 
         title: "Séance 11 : Héphaïstos", 
-        text: "Écrivez ici le texte personnalisé pour la séance 11..." 
+        text: `Collez le texte du récit 11 ici.` 
       },
       12: { 
         title: "Séance 12 : Aphrodite", 
-        text: "Écrivez ici le texte personnalisé pour la séance 12..." 
+        text: `Collez le texte du récit 12 ici.` 
       }
     };
 
@@ -280,7 +242,7 @@
         const card = document.createElement('div');
         const isUnlocked = localStorage.getItem(`chapter_${i}_unlocked`) === 'true';
         card.className = `chapter-card ${isUnlocked ? 'active' : 'locked'}`;
-        card.innerText = `Séance ${i} ${isUnlocked ? '🔓' : '🔒'}`;
+        card.innerText = `Séance ${i}${isUnlocked ? '🔓' : '🔒'}`;
         card.onclick = () => openChapter(i);
         grid.appendChild(card);
       }
@@ -326,23 +288,7 @@
       const data = CHAPTERS[num];
       document.getElementById('chapter-title').innerText = data.title;
       document.getElementById('chapter-body').innerText = data.text;
-      
-      const savedNotes = localStorage.getItem(`chapter_${num}_notes`) || '';
-      document.getElementById('user-notes').value = savedNotes;
-      document.getElementById('save-status').style.display = 'none';
-
       stopTTS();
-    }
-
-    function saveNotes() {
-      const notesText = document.getElementById('user-notes').value;
-      localStorage.setItem(`chapter_${selectedChapter}_notes`, notesText);
-      
-      const statusEl = document.getElementById('save-status');
-      statusEl.style.display = 'block';
-      setTimeout(() => {
-        statusEl.style.display = 'none';
-      }, 3000);
     }
 
     function showMenu() {
