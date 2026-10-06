@@ -1,330 +1,397 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head> 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Odyssée - Protocole Égée</title>
-<style>
-    * {
-        box-sizing: border-box;
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>L'Odyssée de Sacha</title>
+  <style>
+    :root {
+      --bg-color: #121212;
+      --card-bg: #1e1e1e;
+      --accent: #4a90e2;
+      --text: #ffffff;
+      --text-muted: #b0b0b0;
+      --locked: #333333;
+      --success: #2ecc71;
+      --error: #e74c3c;
     }
+
     body {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        background-color: #0f172a;
-        color: #f8fafc;
-        margin: 0;
-        padding: 15px;
-        display: flex;
-        justify-content: center;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text);
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
     }
-    .app-container {
-        width: 100%;
-        max-width: 500px; /* Taille optimale sur smartphone */
-        background: #1e293b;
-        border-radius: 20px;
-        padding: 20px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        border: 1px solid #334155;
-    }
+
     h1 {
-        color: #38bdf8;
-        text-align: center;
-        font-size: 1.6em;
-        margin-top: 0;
-        margin-bottom: 5px;
+      text-align: center;
+      color: var(--accent);
+      margin-bottom: 20px;
     }
-    .subtitle {
-        text-align: center;
-        color: #94a3b8;
-        font-size: 0.9em;
-        margin-bottom: 20px;
-    }
+
     .grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 12px;
-        margin-bottom: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 15px;
+      width: 100%;
+      max-width: 600px;
     }
+
+    .chapter-card {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.2s ease;
+      font-size: 1.1rem;
+      font-weight: bold;
+    }
+
+    .chapter-card.locked {
+      background-color: var(--locked);
+      color: var(--text-muted);
+    }
+
+    .chapter-card.active {
+      border-color: var(--accent);
+    }
+
+    .view-container {
+      width: 100%;
+      max-width: 600px;
+      margin-top: 20px;
+    }
+
     .card {
-        background: #0f172a;
-        border: 2px solid #334155;
-        border-radius: 12px;
-        padding: 15px 5px;
-        text-align: center;
-        cursor: pointer;
-        user-select: none;
-        transition: transform 0.1s;
+      background-color: var(--card-bg);
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
     }
-    .card:active {
-        transform: scale(0.96);
+
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #444;
+      background-color: #2a2a2a;
+      color: #fff;
+      font-size: 1rem;
+      margin-top: 10px;
+      box-sizing: border-box;
+      text-transform: uppercase;
     }
-    .card.unlocked {
-        border-color: #22c55e;
-        background: #064e3b;
+
+    textarea {
+      width: 100%;
+      height: 120px;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #444;
+      background-color: #2a2a2a;
+      color: #fff;
+      font-size: 1rem;
+      margin-top: 10px;
+      box-sizing: border-box;
+      resize: vertical;
+      font-family: inherit;
     }
-    .card-title {
-        font-weight: bold;
-        font-size: 0.9em;
-        color: #f8fafc;
+
+    button {
+      background-color: var(--accent);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 15px;
+      touch-action: manipulation;
     }
-    .card-status {
-        font-size: 1.2em;
-        margin-top: 5px;
+
+    .tts-btn {
+      background-color: #27ae60;
+      margin-top: 15px;
     }
-    .btn {
-        display: block;
-        width: 100%;
-        padding: 16px;
-        margin: 12px 0;
-        border: none;
-        background: #38bdf8;
-        color: #0f172a;
-        font-size: 1.1em;
-        font-weight: bold;
-        border-radius: 12px;
-        cursor: pointer;
-        text-align: center;
+
+    .save-notes-btn {
+      background-color: #8e44ad;
+      margin-top: 10px;
     }
-    .btn:active {
-        opacity: 0.8;
-    }
-    .btn-secondary {
-        background: #475569;
-        color: #f8fafc;
-    }
-    .btn-success {
-        background: #22c55e;
-        color: #0f172a;
-    }
-    .hidden {
-        display: none !important;
-    }
-    .input-code {
-        width: 100%;
-        padding: 15px;
-        font-size: 1.3em;
-        text-align: center;
-        border-radius: 10px;
-        border: 2px solid #38bdf8;
-        background: #0f172a;
-        color: #fff;
-        letter-spacing: 2px;
-        margin: 15px 0;
-        text-transform: uppercase;
-    }
-    .story-box {
-        background: #0f172a;
-        border-left: 4px solid #38bdf8;
-        padding: 15px;
-        border-radius: 8px;
-        line-height: 1.6;
-        font-size: 1.05em;
-        margin: 15px 0;
-    }
+
     .error-msg {
-        color: #f43f5e;
-        text-align: center;
-        font-weight: bold;
-        margin-top: 10px;
+      color: var(--error);
+      margin-top: 10px;
+      font-size: 0.9rem;
+      display: none;
     }
-</style>
+
+    .save-status {
+      color: var(--success);
+      margin-top: 8px;
+      font-size: 0.9rem;
+      display: none;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .back-btn {
+      background-color: transparent;
+      border: 1px solid var(--text-muted);
+      color: var(--text-muted);
+      margin-bottom: 15px;
+    }
+
+    .notes-section {
+      margin-top: 25px;
+      padding-top: 15px;
+      border-top: 1px solid #333;
+    }
+  </style>
 </head>
 <body>
 
-<div class="app-container">
-    
-    <!-- ACCUEIL : LISTE DES 12 SÉANCES -->
-    <div id="viewHome">
-        <h1>🚀 ODYSSÉE ÉGÉE</h1>
-        <div class="subtitle">12 étapes vers la victoire</div>
-        <div class="grid" id="gridContainer"></div>
+  <h1>L'Odyssée de Sacha</h1>
+
+  <!-- VUE GRILLE (Menu principal) -->
+  <div id="menu-view">
+    <div class="grid" id="chapters-grid"></div>
+  </div>
+
+  <!-- VUE MOT DE PASSE -->
+  <div id="auth-view" class="view-container hidden">
+    <button class="back-btn" onclick="showMenu()">← Retour à la liste</button>
+    <div class="card">
+      <h2 id="auth-title">Séance</h2>
+      <p>Entrez le code secret pour débloquer cette séance :</p>
+      <input type="text" id="passcode-input" placeholder="Ex: EGEE01" autocomplete="off">
+      <div id="error-msg" class="error-msg">Code incorrect. Veuillez réessayer.</div>
+      <button onclick="verifyPasscode()">Déverrouiller</button>
     </div>
+  </div>
 
-    <!-- DÉVERROUILLAGE PAR CODE SECRET -->
-    <div id="viewLock" class="hidden">
-        <h2 style="text-align: center; color: #38bdf8;" id="lockTitle">Séance</h2>
-        <p style="text-align: center;">Entrez le code transmis par SMS pour ouvrir ce chapitre :</p>
-        <input type="text" id="codeField" class="input-code" placeholder="CODE SECRET" autocomplete="off">
-        <button class="btn" onclick="validateCode()">DÉBLOQUER</button>
-        <div id="errorText" class="error-msg"></div>
-        <button class="btn btn-secondary" onclick="goHome()" style="margin-top: 20px;">⬅️ RETOUR</button>
+  <!-- VUE LECTURE DU CHAPITRE -->
+  <div id="content-view" class="view-container hidden">
+    <button class="back-btn" onclick="showMenu()">← Retour aux séances</button>
+    <div class="card">
+      <h2 id="chapter-title"></h2>
+      <div id="chapter-body" style="line-height: 1.6; font-size: 1.1rem; white-space: pre-line;"></div>
+      <button class="tts-btn" onclick="toggleTTS()" id="tts-btn">🔊 ÉCOUTER LE TEXTE</button>
+
+      <!-- ZONE POUR ÉCRIRE SES IMPRESSIONS / NOTES -->
+      <div class="notes-section">
+        <h3>📝 Espace d'écriture :</h3>
+        <textarea id="user-notes" placeholder="Rédigez vos remarques, émotions, questions ou notes ici..."></textarea>
+        <button class="save-notes-btn" onclick="saveNotes()">Enregistrer mes notes</button>
+        <div id="save-status" class="save-status">✓ Notes enregistrées avec succès !</div>
+      </div>
     </div>
+  </div>
 
-    <!-- ÉCRAN DU CHAPITRE -->
-    <div id="viewChapter" class="hidden">
-        <h2 style="color: #38bdf8; margin-top: 0;" id="chapterTitle"></h2>
-        
-        <!-- CHOIX MODE LECTURE OU ÉCOUTE -->
-        <div id="modeChoice">
-            <p><strong>Comment veux-tu découvrir ce chapitre ?</strong></p>
-            <button class="btn" onclick="openTextMode()">📖 LIRE</button>
-            <button class="btn btn-success" onclick="openAudioMode()">🎧 ÉCOUTER (AUDIO)</button>
-        </div>
-
-        <!-- AFFICHAGE TEXTE -->
-        <div id="textSection" class="story-box hidden"></div>
-
-        <!-- AFFICHAGE AUDIO -->
-        <div id="audioSection" class="story-box hidden" style="text-align: center;">
-            <p>📻 <em>Lecture audio du chapitre :</em></p>
-            <button class="btn" id="btnPlayVoice" onclick="playNativeVoice()">▶️ LANCER LA LECTURE</button>
-            <button class="btn btn-secondary hidden" id="btnStopVoice" onclick="stopNativeVoice()">⏹️ ARRÊTER</button>
-        </div>
-
-        <button class="btn btn-secondary" onclick="goHome()" style="margin-top: 20px;">⬅️ REVENIR AUX SÉANCES</button>
-    </div>
-
-</div>
-
-<script>
-// 1. CODES SECRETS POUR CHAQUE SÉANCE (TU PEUX LES CHANGER)
-const CODES = {
-    1: "EGEE01",
-    2: "EGEE02",
-    3: "EGEE03",
-    4: "EGEE04",
-    5: "EGEE05",
-    6: "EGEE06",
-    7: "EGEE07",
-    8: "EGEE08",
-    9: "EGEE09",
-    10: "EGEE10",
-    11: "EGEE11",
-    12: "EGEE12"
-};
-
-// 2. TEXTES DES 12 CHAPITRES DE L'HISTOIRE
-const CHAPTERS = [
-    { title: "Épisode 1 : L'Appel du Labyrinthe", text: "Bienvenue Agent Sacha. Votre mission commence aujourd'hui au Port du Pirée. Une ancienne relique a été divisée en 12 fragments à travers toute la Grèce. Aujourd'hui, vous sécurisez le premier fragment." },
-    { title: "Épisode 2 : Les Ombres d'Olympie", text: "Deuxième étape. Les capteurs indiquent une présence étrange près du temple antique. Gardez votre calme, le deuxième fragment est à portée de main." },
-    { title: "Épisode 3 : Le Canal de Corinthe", text: "Troisième étape. Vous devez franchir le passage étroit. Votre détermination débloque l'accès au fragment suivant." },
-    { title: "Épisode 4 : Le Secret de Delphes", text: "Quatrième étape. L'oracle vous livre une partie du mystère. La moitié du premier quart du voyage est franchie !" },
-    { title: "Épisode 5 : Les Pics des Météores", text: "Cinquième étape. En haut de ces falaises, l'air est pur et la vue est dégagée. Le 5ème fragment brille intensément." },
-    { title: "Épisode 6 : La Tour Blanche (Mi-Parcours !)", text: "SIXIÈME ÉTAPE ! C'est la mi-parcours ! 6 fragments sur 12 sécurisés. Vous avez déjà parcouru la moitié du chemin !" },
-    { title: "Épisode 7 : Le Refuge de l'Olympe", text: "Septième étape. On entame la deuxième moitié du voyage. Les forces reviennent, le sommet n'a jamais été aussi proche." },
-    { title: "Épisode 8 : Le Labyrinthe de Crète", text: "Huitième étape. Vous connaissez maintenant le terrain. Rien ne peut vous désorienter." },
-    { title: "Épisode 9 : La Clarté de Santorin", text: "Neuvième étape. La lumière bleue du village éclaire la suite du chemin. Plus que 3 étapes !" },
-    { title: "Épisode 10 : Les Remparts de Rhodes", text: "Dixième étape. Cap franchi ! La forteresse est solide, tout comme votre progression." },
-    { title: "Épisode 11 : La Porte de Chypre", text: "ONZIÈME ÉTAPE. L'avant-dernière porte ! Tout est en place pour le grand final." },
-    { title: "Épisode 12 : La Victoire Finale", text: "DOUZIÈME ÉTAPE ! MISSION ACCOMPLIE ! Tous les fragments sont réunis. L'Odyssée est terminée avec un succès total !" }
-];
-
-// SAUVEGARDE SUR LE TÉLÉPHONE
-let unlockedList = JSON.parse(localStorage.getItem('unlocked_seances')) || [];
-let currentSelected = 1;
-
-function init() {
-    renderGrid();
-}
-
-function renderGrid() {
-    const container = document.getElementById('gridContainer');
-    container.innerHTML = '';
-    
-    for (let i = 1; i <= 12; i++) {
-        const isUnlocked = unlockedList.includes(i);
-        const card = document.createElement('div');
-        card.className = `card ${isUnlocked ? 'unlocked' : ''}`;
-        card.innerHTML = `
-            <div class="card-title">Séance ${i}</div>
-            <div class="card-status">${isUnlocked ? '🔓' : '🔒'}</div>
-        `;
-        card.onclick = () => selectCard(i, isUnlocked);
-        container.appendChild(card);
-    }
-}
-
-function selectCard(num, isUnlocked) {
-    currentSelected = num;
-    if (isUnlocked) {
-        showChapter();
-    } else {
-        showLock();
-    }
-}
-
-function showLock() {
-    document.getElementById('viewHome').className = 'hidden';
-    document.getElementById('viewLock').className = '';
-    document.getElementById('lockTitle').textContent = `Séance ${currentSelected}`;
-    document.getElementById('codeField').value = '';
-    document.getElementById('errorText').textContent = '';
-}
-
-function validateCode() {
-    const input = document.getElementById('codeField').value.trim().toUpperCase();
-    if (input === CODES[currentSelected]) {
-        if (!unlockedList.includes(currentSelected)) {
-            unlockedList.push(currentSelected);
-            localStorage.setItem('unlocked_seances', JSON.stringify(unlockedList));
-        }
-        showChapter();
-    } else {
-        document.getElementById('errorText').textContent = "Code incorrect ! Demande le code par SMS.";
-    }
-}
-
-function showChapter() {
-    document.getElementById('viewHome').className = 'hidden';
-    document.getElementById('viewLock').className = 'hidden';
-    document.getElementById('viewChapter').className = '';
-    
-    const ch = CHAPTERS[currentSelected - 1];
-    document.getElementById('chapterTitle').textContent = ch.title;
-    
-    // Réinitialiser les sections
-    document.getElementById('modeChoice').className = '';
-    document.getElementById('textSection').className = 'story-box hidden';
-    document.getElementById('audioSection').className = 'story-box hidden';
-    stopNativeVoice();
-}
-
-function openTextMode() {
-    document.getElementById('modeChoice').className = 'hidden';
-    const textSec = document.getElementById('textSection');
-    textSec.textContent = CHAPTERS[currentSelected - 1].text;
-    textSec.className = 'story-box';
-}
-
-function openAudioMode() {
-    document.getElementById('modeChoice').className = 'hidden';
-    document.getElementById('audioSection').className = 'story-box';
-}
-
-function playNativeVoice() {
-    stopNativeVoice();
-    const text = CHAPTERS[currentSelected - 1].text;
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'fr-FR';
-    utterance.rate = 0.9; // Vitesse légèrement adoucie
-    
-    utterance.onend = function() {
-        document.getElementById('btnPlayVoice').className = 'btn';
-        document.getElementById('btnStopVoice').className = 'btn btn-secondary hidden';
+  <script>
+    // Empreintes SHA-256 sécurisées des mots de passe
+    const HASHES = {
+      1: "15975ff57a9770cbf7f1e786b1f22146e279269550b7194602bbcc35149ea79f", // EGEE01
+      2: "6bcbb409d5872a39a7b97a2cbcc8ce40ca58a5e84f59fa7ea27fb053d6eb7c56", // HERA02
+      3: "e1e77f0d0e1b2eb48d3db86cb32ef29bdf43a9d28dbda09337f7a26f3769911e", // ARES03
+      4: "1ba9e7a2b27dcf4ca973b1ff088182bdf42b08a9ebfe06e5792015093e0b490d", // HEST04
+      5: "58742b8e3ea9cd04fa1807d79b94002ea978ea9df201e56b4bd4b5ec91a6d71b", // ZEUS05
+      6: "31eb3b1bbfe4eb919a7168da4ea9fb00d8cc22b6ae0bf5ec8dd8efeeebf0a597", // APOL06
+      7: "7edbeea8b39a31a5ebcd2ba4c1809bd267ba3737ec3fb12dd9b5d27eb95484ff", // ARTE07
+      8: "fb4858b7aa94553535f4ba4cd4ae7a6b7d2f928e4eefec2cbef7441551061f22", // POSE08
+      9: "6eb05d54a5c9f5d379e4d0aa9b5ca817d2a71bfdf9f76a524e93bbef88c1f964", // DEME09
+      10: "50caaa43a056a297eefb3b1c4bd67bdc66bfcb3fbb4a94a0ed50bb9cfebf3d02", // ATHE10
+      11: "c9c22e57ee7144e31e5bcff5bfaef5edcfd9db2f5a019446d61f10bc443bb676", // HEPH11
+      12: "b4bb1ebfec7e5be156ec1698b6727282cbdd9dfa3d5483ea1cbb3d6e5c8e31dc"  // AFRO12
     };
 
-    window.speechSynthesis.speak(utterance);
-    document.getElementById('btnPlayVoice').className = 'btn hidden';
-    document.getElementById('btnStopVoice').className = 'btn btn-secondary';
-}
+    // =========================================================================
+    // MODIFIEZ OU REMPLACEZ LES TEXTES DES 12 SÉANCES CI-DESSOUS
+    // Utiliser \n pour sauter une ligne dans le texte.
+    // =========================================================================
+    const CHAPTERS = {
+      1: { 
+        title: "Séance 1 : L'Égée", 
+        text: "Écrivez ici le texte personnalisé pour la première séance de Sacha..." 
+      },
+      2: { 
+        title: "Séance 2 : Héra", 
+        text: "Écrivez ici le texte personnalisé pour la séance 2..." 
+      },
+      3: { 
+        title: "Séance 3 : Arès", 
+        text: "Écrivez ici le texte personnalisé pour la séance 3..." 
+      },
+      4: { 
+        title: "Séance 4 : Hestia", 
+        text: "Écrivez ici le texte personnalisé pour la séance 4..." 
+      },
+      5: { 
+        title: "Séance 5 : Zeus", 
+        text: "Écrivez ici le texte personnalisé pour la séance 5..." 
+      },
+      6: { 
+        title: "Séance 6 : Apollon", 
+        text: "Écrivez ici le texte personnalisé pour la séance 6..." 
+      },
+      7: { 
+        title: "Séance 7 : Artémis", 
+        text: "Écrivez ici le texte personnalisé pour la séance 7..." 
+      },
+      8: { 
+        title: "Séance 8 : Poseïdon", 
+        text: "Écrivez ici le texte personnalisé pour la séance 8..." 
+      },
+      9: { 
+        title: "Séance 9 : Déméter", 
+        text: "Écrivez ici le texte personnalisé pour la séance 9..." 
+      },
+      10: { 
+        title: "Séance 10 : Athéna", 
+        text: "Écrivez ici le texte personnalisé pour la séance 10..." 
+      },
+      11: { 
+        title: "Séance 11 : Héphaïstos", 
+        text: "Écrivez ici le texte personnalisé pour la séance 11..." 
+      },
+      12: { 
+        title: "Séance 12 : Aphrodite", 
+        text: "Écrivez ici le texte personnalisé pour la séance 12..." 
+      }
+    };
 
-function stopNativeVoice() {
-    if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
+    let selectedChapter = null;
+    let ttsUtterance = null;
+    let isSpeaking = false;
+
+    async function sha256(str) {
+      const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
+      return Array.prototype.map.call(new Uint8Array(buf), x => (('0' + x.toString(16)).slice(-2))).join('');
     }
-    document.getElementById('btnPlayVoice').className = 'btn';
-    document.getElementById('btnStopVoice').className = 'btn btn-secondary hidden';
-}
 
-function goHome() {
-    stopNativeVoice();
-    document.getElementById('viewHome').className = '';
-    document.getElementById('viewLock').className = 'hidden';
-    document.getElementById('viewChapter').className = 'hidden';
+    function renderGrid() {
+      const grid = document.getElementById('chapters-grid');
+      grid.innerHTML = '';
+      
+      for (let i = 1; i <= 12; i++) {
+        const card = document.createElement('div');
+        const isUnlocked = localStorage.getItem(`chapter_${i}_unlocked`) === 'true';
+        card.className = `chapter-card ${isUnlocked ? 'active' : 'locked'}`;
+        card.innerText = `Séance ${i} ${isUnlocked ? '🔓' : '🔒'}`;
+        card.onclick = () => openChapter(i);
+        grid.appendChild(card);
+      }
+    }
+
+    function openChapter(num) {
+      selectedChapter = num;
+      const isUnlocked = localStorage.getItem(`chapter_${num}_unlocked`) === 'true';
+
+      if (isUnlocked) {
+        showContent(num);
+      } else {
+        showAuth(num);
+      }
+    }
+
+    function showAuth(num) {
+      document.getElementById('menu-view').classList.add('hidden');
+      document.getElementById('content-view').classList.add('hidden');
+      document.getElementById('auth-view').classList.remove('hidden');
+      document.getElementById('auth-title').innerText = `Séance ${num}`;
+      document.getElementById('passcode-input').value = '';
+      document.getElementById('error-msg').style.display = 'none';
+      stopTTS();
+    }
+
+    async function verifyPasscode() {
+      const input = document.getElementById('passcode-input').value.trim().toUpperCase();
+      const inputHash = await sha256(input);
+      
+      if (inputHash === HASHES[selectedChapter]) {
+        localStorage.setItem(`chapter_${selectedChapter}_unlocked`, 'true');
+        showContent(selectedChapter);
+      } else {
+        document.getElementById('error-msg').style.display = 'block';
+      }
+    }
+
+    function showContent(num) {
+      document.getElementById('menu-view').classList.add('hidden');
+      document.getElementById('auth-view').classList.add('hidden');
+      document.getElementById('content-view').classList.remove('hidden');
+
+      const data = CHAPTERS[num];
+      document.getElementById('chapter-title').innerText = data.title;
+      document.getElementById('chapter-body').innerText = data.text;
+      
+      const savedNotes = localStorage.getItem(`chapter_${num}_notes`) || '';
+      document.getElementById('user-notes').value = savedNotes;
+      document.getElementById('save-status').style.display = 'none';
+
+      stopTTS();
+    }
+
+    function saveNotes() {
+      const notesText = document.getElementById('user-notes').value;
+      localStorage.setItem(`chapter_${selectedChapter}_notes`, notesText);
+      
+      const statusEl = document.getElementById('save-status');
+      statusEl.style.display = 'block';
+      setTimeout(() => {
+        statusEl.style.display = 'none';
+      }, 3000);
+    }
+
+    function showMenu() {
+      document.getElementById('content-view').classList.add('hidden');
+      document.getElementById('auth-view').classList.add('hidden');
+      document.getElementById('menu-view').classList.remove('hidden');
+      stopTTS();
+      renderGrid();
+    }
+
+    function toggleTTS() {
+      if (isSpeaking) {
+        stopTTS();
+      } else {
+        const text = document.getElementById('chapter-body').innerText;
+        ttsUtterance = new SpeechSynthesisUtterance(text);
+        ttsUtterance.lang = 'fr-FR';
+        ttsUtterance.rate = 0.9;
+        
+        ttsUtterance.onend = () => {
+          isSpeaking = false;
+          document.getElementById('tts-btn').innerText = '🔊 ÉCOUTER LE TEXTE';
+        };
+
+        window.speechSynthesis.speak(ttsUtterance);
+        isSpeaking = true;
+        document.getElementById('tts-btn').innerText = '⏹ ARRÊTER';
+      }
+    }
+
+    function stopTTS() {
+      if (window.speechSynthesis) {
+        window.speechSynthesis.cancel();
+      }
+      isSpeaking = false;
+      const btn = document.getElementById('tts-btn');
+      if (btn) btn.innerText = '🔊 ÉCOUTER LE TEXTE';
+    }
+
     renderGrid();
-}
-
-init();
-</script>
+  </script>
 </body>
 </html>
