@@ -1,334 +1,1465 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>L'Odyssée de Sacha</title>
-  <style>
-    :root {
-      --bg-color: #121212;
-      --card-bg: #1e1e1e;
-      --accent: #4a90e2;
-      --text: #ffffff;
-      --text-muted: #b0b0b0;
-      --locked: #333333;
-      --error: #e74c3c;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Le Cinquième Sceau — Chroniques des Douze Vents</title>
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background-color: var(--bg-color);
-      color: var(--text);
-      margin: 0;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-    }
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap');
 
-    h1 {
-      text-align: center;
-      color: var(--accent);
-      margin-bottom: 20px;
-    }
+:root {
+  --bg-deep: #05080c;
+  --bg-dark: #0a1118;
+  --gold-primary: #d4af37;
+  --gold-light: #f3e5ab;
+  --gold-dark: #997a15;
+  --paper-bg: #eddcb5;
+  --paper-shadow: #2a1f18;
+  --ink-primary: #1c130d;
+  --ink-faded: #4a3b2c;
+  --crimson-seal: #8b0000;
+  --crimson-hover: #a80f0f;
+  --bronze: #8c6831;
+}
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 15px;
-      width: 100%;
-      max-width: 600px;
-    }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-    .chapter-card {
-      background-color: var(--card-bg);
-      border-radius: 12px;
-      padding: 20px;
-      text-align: center;
-      cursor: pointer;
-      border: 2px solid transparent;
-      transition: all 0.2s ease;
-      font-size: 1.1rem;
-      font-weight: bold;
-    }
+body {
+  background-color: var(--bg-deep);
+  color: #e2d9c8;
+  font-family: 'Cormorant Garamond', serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-image: 
+    radial-gradient(circle at 50% 10%, #152535 0%, transparent 60%),
+    radial-gradient(circle at 80% 80%, #0d1b2a 0%, transparent 50%),
+    radial-gradient(circle at 10% 90%, #121018 0%, transparent 50%);
+  background-attachment: fixed;
+}
 
-    .chapter-card.locked {
-      background-color: var(--locked);
-      color: var(--text-muted);
-    }
+/* Stardust Background Particles */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.3;
+  background-image: 
+    radial-gradient(circle at 15% 25%, #fff 0 1px, transparent 2px),
+    radial-gradient(circle at 75% 15%, var(--gold-light) 0 1px, transparent 2px),
+    radial-gradient(circle at 85% 65%, #fff 0 1px, transparent 2px),
+    radial-gradient(circle at 25% 75%, var(--gold-primary) 0 1.5px, transparent 3px);
+  background-size: 350px 350px;
+  animation: floatStars 60s linear infinite;
+  z-index: 1;
+}
 
-    .chapter-card.active {
-      border-color: var(--accent);
-    }
+@keyframes floatStars {
+  from { background-position: 0 0; }
+  to { background-position: 350px 700px; }
+}
 
-    .view-container {
-      width: 100%;
-      max-width: 600px;
-      margin-top: 20px;
-    }
+.container {
+  width: min(1000px, 92%);
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+  padding: 40px 0 80px;
+}
 
-    .card {
-      background-color: var(--card-bg);
-      padding: 25px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-    }
+/* Header */
+header {
+  text-align: center;
+  margin-bottom: 40px;
+  position: relative;
+}
 
-    input[type="text"] {
-      width: 100%;
-      padding: 12px;
-      border-radius: 8px;
-      border: 1px solid #444;
-      background-color: #2a2a2a;
-      color: #fff;
-      font-size: 1rem;
-      margin-top: 10px;
-      box-sizing: border-box;
-      text-transform: uppercase;
-    }
+.title-badge {
+  font-family: 'Cinzel', serif;
+  font-size: 0.85rem;
+  letter-spacing: 7px;
+  color: var(--gold-primary);
+  text-transform: uppercase;
+  margin-bottom: 15px;
+  text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+}
 
-    button {
-      background-color: var(--accent);
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 8px;
-      font-size: 1rem;
-      font-weight: bold;
-      cursor: pointer;
-      width: 100%;
-      margin-top: 15px;
-      touch-action: manipulation;
-    }
+h1 {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-size: clamp(2.2rem, 5.5vw, 4.2rem);
+  color: var(--gold-light);
+  letter-spacing: 4px;
+  text-shadow: 0 0 30px rgba(212, 175, 55, 0.4), 0 0 5px rgba(0,0,0,0.8);
+  line-height: 1.15;
+}
 
-    .tts-btn {
-      background-color: #27ae60;
-      margin-top: 20px;
-    }
+.subtitle {
+  margin-top: 15px;
+  font-size: 1.35rem;
+  font-style: italic;
+  color: #c0b49d;
+  font-weight: 400;
+}
 
-    .error-msg {
-      color: var(--error);
-      margin-top: 10px;
-      font-size: 0.9rem;
-      display: none;
-    }
+/* Navigation & Progress Controls */
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(10, 17, 24, 0.75);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 8px;
+  padding: 15px 25px;
+  margin-bottom: 35px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
 
-    .hidden {
-      display: none;
-    }
+.progress-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex-grow: 1;
+  max-width: 60%;
+}
 
-    .back-btn {
-      background-color: transparent;
-      border: 1px solid var(--text-muted);
-      color: var(--text-muted);
-      margin-bottom: 15px;
-    }
-  </style>
+.progress-text {
+  font-family: 'Cinzel', serif;
+  font-size: 0.85rem;
+  color: var(--gold-light);
+  letter-spacing: 2px;
+}
+
+.progress-bar-bg {
+  height: 8px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.progress-bar-fill {
+  height: 100%;
+  width: 8.33%;
+  background: linear-gradient(90deg, var(--gold-dark), var(--gold-primary), var(--gold-light));
+  box-shadow: 0 0 10px var(--gold-primary);
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.btn-icon {
+  background: rgba(212, 175, 55, 0.1);
+  border: 1px solid var(--gold-primary);
+  color: var(--gold-light);
+  padding: 8px 16px;
+  font-family: 'Cinzel', serif;
+  font-size: 0.8rem;
+  letter-spacing: 1.5px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-icon:hover {
+  background: var(--gold-primary);
+  color: var(--bg-deep);
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+}
+
+/* Paper Parchment Card */
+.parchment {
+  background: 
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.12), transparent 80%),
+    linear-gradient(135deg, #f4e7cd 0%, #e5d2a7 50%, #d8be8d 100%);
+  color: var(--ink-primary);
+  border-radius: 6px;
+  box-shadow: 
+    0 0 0 1px #70552b,
+    0 20px 50px rgba(0,0,0,0.8),
+    inset 0 0 80px rgba(112, 85, 43, 0.3);
+  padding: clamp(30px, 6vw, 65px);
+  position: relative;
+  margin-bottom: 40px;
+}
+
+/* Antique Parchment Border Effect */
+.parchment::before {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border: 1px solid rgba(80, 50, 20, 0.25);
+  pointer-events: none;
+}
+
+.parchment::after {
+  content: "";
+  position: absolute;
+  inset: 16px;
+  border: 1px dashed rgba(80, 50, 20, 0.15);
+  pointer-events: none;
+}
+
+/* Grid Codex View */
+.codex-header {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.codex-title {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  color: var(--crimson-seal);
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+  letter-spacing: 2px;
+}
+
+.codex-quote {
+  font-style: italic;
+  color: var(--ink-faded);
+  font-size: 1.15rem;
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+.chapter-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.chapter-card {
+  background: linear-gradient(145deg, #f8efe0, #e2cfaa);
+  border: 1px solid #a38453;
+  border-radius: 5px;
+  padding: 20px;
+  min-height: 140px;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.chapter-card:hover:not(.locked) {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+  border-color: var(--crimson-seal);
+}
+
+.chapter-card.locked {
+  background: linear-gradient(145deg, #2c2722, #1c1916);
+  border-color: #4a4035;
+  color: #7d7265;
+  cursor: pointer;
+}
+
+.card-num {
+  font-family: 'Cinzel', serif;
+  font-size: 0.75rem;
+  letter-spacing: 3px;
+  color: var(--crimson-seal);
+  font-weight: 700;
+}
+
+.locked .card-num {
+  color: #8c7151;
+}
+
+.card-city {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 6px 0;
+  color: var(--ink-primary);
+}
+
+.locked .card-city {
+  color: #a89c8c;
+}
+
+.card-title-sub {
+  font-size: 0.95rem;
+  font-style: italic;
+  color: var(--ink-faded);
+  line-height: 1.3;
+}
+
+.locked .card-title-sub {
+  color: #61574d;
+}
+
+.card-status {
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem;
+  letter-spacing: 1.5px;
+  margin-top: 12px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Chapter Display View */
+.chapter-header {
+  text-align: center;
+  margin-bottom: 40px;
+  padding-bottom: 25px;
+  border-bottom: 1px solid rgba(139, 0, 0, 0.2);
+}
+
+.chapter-location-tag {
+  font-family: 'Cinzel', serif;
+  font-size: 0.85rem;
+  letter-spacing: 4px;
+  color: var(--bronze);
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.chapter-main-title {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  color: var(--crimson-seal);
+  margin: 10px 0 15px;
+  line-height: 1.25;
+}
+
+.chapter-epigraph {
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--ink-faded);
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Narrative Typography */
+.narrative-body {
+  font-size: 1.25rem;
+  line-height: 2;
+  color: #1a120b;
+  text-align: justify;
+}
+
+.narrative-body p {
+  margin-bottom: 24px;
+  text-indent: 2em;
+}
+
+/* Lettrine for first paragraph */
+.narrative-body p:first-of-type::first-letter {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-size: 3.8em;
+  float: left;
+  line-height: 0.8;
+  margin-right: 12px;
+  margin-top: 4px;
+  color: var(--crimson-seal);
+  text-shadow: 2px 2px 0 rgba(0,0,0,0.1);
+}
+
+.narrative-body .dialogue {
+  text-indent: 0;
+  padding-left: 20px;
+  border-left: 2px solid rgba(139, 0, 0, 0.3);
+  font-style: italic;
+  color: #0d1a24;
+  margin: 18px 0;
+}
+
+.narrative-body .thought {
+  font-style: italic;
+  color: #4a3421;
+}
+
+.ornamental-divider {
+  text-align: center;
+  font-size: 1.5rem;
+  color: var(--bronze);
+  margin: 35px 0;
+  letter-spacing: 12px;
+  opacity: 0.8;
+}
+
+.clue-box {
+  background: rgba(139, 0, 0, 0.05);
+  border: 1px solid rgba(139, 0, 0, 0.3);
+  border-left: 4px solid var(--crimson-seal);
+  padding: 22px 28px;
+  margin: 35px 0;
+  border-radius: 0 6px 6px 0;
+  font-style: italic;
+  font-size: 1.2rem;
+  line-height: 1.7;
+  color: #2b1108;
+  box-shadow: inset 0 0 15px rgba(139, 0, 0, 0.03);
+}
+
+.clue-box-title {
+  font-family: 'Cinzel', serif;
+  font-style: normal;
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  color: var(--crimson-seal);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+/* Choice Section */
+.choice-section {
+  background: rgba(12, 22, 33, 0.04);
+  border: 1px solid var(--bronze);
+  border-radius: 6px;
+  padding: 30px;
+  margin-top: 45px;
+  text-align: center;
+}
+
+.choice-title {
+  font-family: 'Cinzel', serif;
+  color: var(--crimson-seal);
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+}
+
+.choice-desc {
+  font-size: 1.1rem;
+  color: var(--ink-faded);
+  margin-bottom: 25px;
+}
+
+.choice-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+}
+
+.btn-choice {
+  background: var(--ink-primary);
+  color: var(--paper-bg);
+  border: 1px solid var(--gold-dark);
+  padding: 14px 24px;
+  font-family: 'Cinzel', serif;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-choice:hover {
+  background: var(--crimson-seal);
+  border-color: var(--crimson-seal);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(139, 0, 0, 0.3);
+}
+
+/* Authentication Modal / Overlay */
+.auth-panel {
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 20px 0;
+}
+
+.auth-title {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  color: var(--crimson-seal);
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+}
+
+.auth-desc {
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: var(--ink-faded);
+  margin-bottom: 25px;
+}
+
+.seal-input-group {
+  position: relative;
+  margin: 30px 0;
+}
+
+.seal-input {
+  width: 100%;
+  padding: 16px 20px;
+  font-family: 'Cinzel', serif;
+  font-size: 1.2rem;
+  letter-spacing: 6px;
+  text-align: center;
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.7);
+  border: 2px solid var(--bronze);
+  border-radius: 4px;
+  color: var(--ink-primary);
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.seal-input:focus {
+  border-color: var(--crimson-seal);
+  box-shadow: 0 0 12px rgba(139, 0, 0, 0.2);
+}
+
+.error-message {
+  color: var(--crimson-seal);
+  font-weight: 600;
+  margin-top: 10px;
+  font-size: 0.95rem;
+  display: none;
+}
+
+.btn-unlock {
+  background: linear-gradient(135deg, var(--crimson-seal), var(--crimson-hover));
+  color: #fff;
+  border: 1px solid var(--gold-primary);
+  padding: 16px 32px;
+  font-family: 'Cinzel', serif;
+  font-size: 1rem;
+  letter-spacing: 3px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s;
+  width: 100%;
+  box-shadow: 0 6px 20px rgba(139, 0, 0, 0.3);
+}
+
+.btn-unlock:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(139, 0, 0, 0.5);
+}
+
+/* Journal Drawer Side Modal */
+.journal-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 8, 12, 0.85);
+  backdrop-filter: blur(10px);
+  z-index: 100;
+  display: flex;
+  justify-content: flex-end;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.journal-modal.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.journal-content {
+  width: min(500px, 90vw);
+  height: 100%;
+  background: var(--paper-bg);
+  color: var(--ink-primary);
+  padding: 40px 30px;
+  overflow-y: auto;
+  box-shadow: -10px 0 30px rgba(0,0,0,0.8);
+  transform: translateX(100%);
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  border-left: 2px solid var(--gold-primary);
+}
+
+.journal-modal.active .journal-content {
+  transform: translateX(0);
+}
+
+.journal-title {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  color: var(--crimson-seal);
+  font-size: 1.6rem;
+  margin-bottom: 25px;
+  border-bottom: 1px solid rgba(139, 0, 0, 0.2);
+  padding-bottom: 12px;
+}
+
+.journal-entry {
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 1px dashed rgba(80, 50, 20, 0.2);
+}
+
+.journal-entry-city {
+  font-family: 'Cinzel', serif;
+  font-weight: bold;
+  color: var(--bronze);
+  font-size: 0.85rem;
+  letter-spacing: 2px;
+}
+
+.journal-entry-text {
+  font-style: italic;
+  font-size: 1.05rem;
+  margin-top: 5px;
+  line-height: 1.6;
+}
+
+.close-journal {
+  background: none;
+  border: none;
+  font-family: 'Cinzel', serif;
+  font-size: 1.8rem;
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  cursor: pointer;
+  color: var(--ink-primary);
+}
+
+/* Audio Player Floating Widget */
+.audio-control-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 40px;
+  padding: 15px;
+  background: rgba(10, 17, 24, 0.6);
+  border-radius: 30px;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.audio-btn {
+  background: var(--gold-primary);
+  color: var(--bg-deep);
+  border: none;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  transition: transform 0.2s;
+}
+
+.audio-btn:hover {
+  transform: scale(1.1);
+}
+
+.hidden {
+  display: none !important;
+}
+
+@media (max-width: 650px) {
+  .narrative-body {
+    font-size: 1.1rem;
+    line-height: 1.8;
+  }
+  .narrative-body p {
+    text-indent: 1em;
+  }
+  .top-nav {
+    flex-direction: column;
+    gap: 15px;
+  }
+  .progress-info {
+    max-width: 100%;
+    width: 100%;
+  }
+}
+</style>
 </head>
+
 <body>
 
-  <h1>L'Odyssée de Sacha</h1>
+<div class="container">
 
-  <!-- VUE GRILLE (Menu principal) -->
-  <div id="menu-view">
-    <div class="grid" id="chapters-grid"></div>
-  </div>
+  <header>
+    <div class="title-badge">Chronique Épique des Douze Vents</div>
+    <h1>LE CINQUIÈME SCEAU</h1>
+    <div class="subtitle">L'Énigme Sacrée qu'Iris laissa derrière elle</div>
+  </header>
 
-  <!-- VUE MOT DE PASSE -->
-  <div id="auth-view" class="view-container hidden">
-    <button class="back-btn" onclick="showMenu()">← Retour à la liste</button>
-    <div class="card">
-      <h2 id="auth-title">Séance</h2>
-      <p>Entrez le code secret pour débloquer cette séance :</p>
-      <input type="text" id="passcode-input" placeholder="Ex: EGEE01" autocomplete="off">
-      <div id="error-msg" class="error-msg">Code incorrect. Veuillez réessayer.</div>
-      <button onclick="verifyPasscode()">Déverrouiller</button>
+  <!-- Navigation Bar -->
+  <div class="top-nav">
+    <div class="progress-info">
+      <div class="progress-text">Progression : Étape <span id="progressStepNum">1</span> sur 12</div>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="progressBarFill"></div>
+      </div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn-icon" onclick="toggleJournal()">
+        📜 Carnet de Bord
+      </button>
     </div>
   </div>
 
-  <!-- VUE LECTURE DU CHAPITRE -->
-  <div id="content-view" class="view-container hidden">
-    <button class="back-btn" onclick="showMenu()">← Retour aux séances</button>
-    <div class="card">
-      <h2 id="chapter-title"></h2>
-      <div id="chapter-body" style="line-height: 1.6; font-size: 1.1rem; white-space: pre-line;"></div>
-      <button class="tts-btn" onclick="toggleTTS()" id="tts-btn">🔊 ÉCOUTER LE TEXTE</button>
+  <!-- MAIN MENU / CODEX -->
+  <div id="viewCodex" class="parchment">
+    <div class="codex-header">
+      <div class="codex-title">Le Codex des Douze Sentiers</div>
+      <div class="codex-quote">
+        « Certaines routes ne conduisent pas à des cités. Elles démantèlent l'âme jusqu'à ce que seule la vérité subsiste. »
+      </div>
+    </div>
+
+    <div class="chapter-grid" id="chapterGrid"></div>
+  </div>
+
+  <!-- AUTHENTICATION / LOCK PANEL -->
+  <div id="viewAuth" class="parchment hidden">
+    <button class="btn-icon" onclick="showCodex()" style="margin-bottom: 25px;">← Retour au Codex</button>
+
+    <div class="auth-panel">
+      <div class="auth-title" id="authTitle">Porte Scellée</div>
+      <div class="auth-desc">
+        Le voile sur cette étape exige le Mot de Passe des Ombres. 
+        Consultez les écrits précédents ou interrogez le destin pour franchir le seuil.
+      </div>
+
+      <div class="seal-input-group">
+        <input type="text" id="codeInput" class="seal-input" placeholder="ENTREZ LE MOT DE PASSE" autocomplete="off">
+        <div id="errorMsg" class="error-message">Mot de passe incorrect. Le silence de la pierre demeure incompris.</div>
+      </div>
+
+      <button class="btn-unlock" onclick="verifyCode()">ROMPRE LE SCEAU</button>
     </div>
   </div>
 
-  <script>
-    // Codes secrets simples
-    const PASSCODES = {
-      1: "EGEE01",
-      2: "HERA02",
-      3: "ARES03",
-      4: "HEST04",
-      5: "ZEUS05",
-      6: "APOL06",
-      7: "ARTE07",
-      8: "POSE08",
-      9: "DEME09",
-      10: "ATHE10",
-      11: "HEPH11",
-      12: "AFRO12"
-    };
+  <!-- CHAPTER READER -->
+  <div id="viewReader" class="parchment hidden">
+    <button class="btn-icon" onclick="showCodex()" style="margin-bottom: 30px;">← Retour au Codex</button>
 
-    // =========================================================================
-    // COPIEZ ET COLLEZ VOS TEXTES DE RÉCIT ENTRE LES GUILLEMETS POUR CHAQUE SÉANCE
-    // Note : Pour faire un saut de ligne dans le texte, vous pouvez simplement
-    // taper Entrée si vous utilisez des accents graves `...` ou écrire \n
-    // =========================================================================
-    const CHAPTERS = {
-      1: { 
-        title: "Séance 1 : L'Égée", 
-        text: `Collez le texte du récit 1 ici.` 
-      },
-      2: { 
-        title: "Séance 2 : Héra", 
-        text: `Collez le texte du récit 2 ici.` 
-      },
-      3: { 
-        title: "Séance 3 : Arès", 
-        text: `Collez le texte du récit 3 ici.` 
-      },
-      4: { 
-        title: "Séance 4 : Hestia", 
-        text: `Collez le texte du récit 4 ici.` 
-      },
-      5: { 
-        title: "Séance 5 : Zeus", 
-        text: `Collez le texte du récit 5 ici.` 
-      },
-      6: { 
-        title: "Séance 6 : Apollon", 
-        text: `Collez le texte du récit 6 ici.` 
-      },
-      7: { 
-        title: "Séance 7 : Artémis", 
-        text: `Collez le texte du récit 7 ici.` 
-      },
-      8: { 
-        title: "Séance 8 : Poseïdon", 
-        text: `Collez le texte du récit 8 ici.` 
-      },
-      9: { 
-        title: "Séance 9 : Déméter", 
-        text: `Collez le texte du récit 9 ici.` 
-      },
-      10: { 
-        title: "Séance 10 : Athéna", 
-        text: `Collez le texte du récit 10 ici.` 
-      },
-      11: { 
-        title: "Séance 11 : Héphaïstos", 
-        text: `Collez le texte du récit 11 ici.` 
-      },
-      12: { 
-        title: "Séance 12 : Aphrodite", 
-        text: `Collez le texte du récit 12 ici.` 
-      }
-    };
+    <div class="chapter-header">
+      <div class="chapter-location-tag" id="chLocation">--</div>
+      <h2 class="chapter-main-title" id="chTitle">--</h2>
+      <div class="chapter-epigraph" id="chEpigraph">--</div>
+    </div>
 
-    let selectedChapter = null;
-    let ttsUtterance = null;
-    let isSpeaking = false;
+    <div class="narrative-body" id="chNarrative"></div>
 
-    function renderGrid() {
-      const grid = document.getElementById('chapters-grid');
-      grid.innerHTML = '';
-      
-      for (let i = 1; i <= 12; i++) {
-        const card = document.createElement('div');
-        const isUnlocked = localStorage.getItem(`chapter_${i}_unlocked`) === 'true';
-        card.className = `chapter-card ${isUnlocked ? 'active' : 'locked'}`;
-        card.innerText = `Séance ${i}${isUnlocked ? '🔓' : '🔒'}`;
-        card.onclick = () => openChapter(i);
-        grid.appendChild(card);
-      }
+    <div class="audio-control-bar">
+      <span style="font-family:'Cinzel'; font-size:0.85rem; color:#fff;">Récit Audio :</span>
+      <button class="audio-btn" onclick="readStory()" title="Écouter">▶</button>
+      <button class="audio-btn" onclick="stopReading()" title="Arrêter">■</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- JOURNAL MODAL -->
+<div class="journal-modal" id="journalModal">
+  <div class="journal-content">
+    <button class="close-journal" onclick="toggleJournal()">×</button>
+    <div class="journal-title">Les Notes d'Orion & Callista</div>
+    <div id="journalEntriesList">
+      <!-- Entries injected dynamically -->
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   PASSWORDS & CHAPTER CODES
+   ============================================================ */
+const CODES = {
+  1: "AGORA",
+  2: "PYTHIE",
+  3: "FRESQUE",
+  4: "OLYMPIE",
+  5: "OMBRES",
+  6: "SCYTALE",
+  7: "MYCENES",
+  8: "PALAMEDE",
+  9: "ECHO",
+  10: "CYCLOPE",
+  11: "HORIZON",
+  12: "IRIS"
+};
+
+/* ============================================================
+   12 CHAPTERS - NOVEL-GRADE REWRITE
+   ============================================================ */
+const chapters = [
+{
+  number: 1,
+  city: "ATHÈNES",
+  title: "Le Matin des Ombres Vives",
+  epigraph: "« Un secret enfoui ne s'éteint pas. Il attend sous la terre, patiemment, la première pelle tenue par des mains incapables d'abandonner. »",
+  text: `
+    <p>Il est des aubes où une cité entière semble retenir son souffle, complice d'un drame que seuls les oiseaux pressentent. Athènes s’éveillait dans une brume dorée, teintée du parfum amer du thym sauvage et des fumées de bois de pin. Le soleil effleurait à peine les arêtes parfaites du Parthénon lorsque nous traversâmes l’Agora, ce cœur palpitant où s’entrechoquaient déjà les cris des marchands d'huile, le piétinement lourd des mulets et la rhétorique tranchante des philosophes.</p>
+
+    <p>Orion fendait cette foule avec une précision d’automate. Vêtu de son manteau de laine sombre malgré la tiédeur naissante, son visage demeurait une muraille d'obsidienne. Rien n'y perçait, si ce n'est cette étincelle froide au fond des yeux, propre à ceux qui cherchent une faille dans la texture même du monde.</p>
+
+    <p class="dialogue">— Tu pourrais feindre une ombre d’humanité, Orion, murmurai-je en ajustant la sangle de ma besace. Un sourire coûte moins cher qu'une épée et trompe parfois plus sûrement.</p>
+
+    <p class="dialogue">— Le sourire est une monnaie de faussaire, Callista. Je ne commerce pas dans la mascarade.</p>
+
+    <p class="dialogue">— C'est navrant. Avec ta sévérité, tu aurais fait un empereur redoutable.</p>
+
+    <p class="dialogue">— Et toi, une tempête diplomatique capable d'embraser trois archipels avant le milieu du jour.</p>
+
+    <p>Je réfrénai un léger rictus. C’était, en trois jours de marche forcée, la première fois qu’il laissait filtrer une trace de repartie. Mais la légèreté fut de courte durée.</p>
+
+    <div class="ornamental-divider">✦ ✦ ✦</div>
+
+    <p>Nous n’étions pas venus à Athènes pour discuter de morale, mais pour chasser un spectre. Trois semaines plus tôt, Iris avait disparu sans bruit, repoussant l'existence comme on ôte un vêtement devenu trop étroit. Pas de lutte, pas de sang sur les dalles, nulle rançon réclamée. Seulement sa chambre baignée de lumière morte, une carte déchirée du Péloponnèse sur sa table de chêne, et cette phrase gravée au style sur le dos d'un vieux registre de comptabilité :</p>
+
+    <div class="clue-box">
+      <div class="clue-box-title">Message d'Iris — Athènes</div>
+      « Ne cherchez pas le lieu où mes pas m'ont menée.<br>
+      Cherchez l'abîme qu'il vous faudra franchir pour m'y rejoindre. »
+    </div>
+
+    <p>Orion avait lu ce vélin une fois. Ses doigts s'étaient crispés sur la matière végétale jusqu'à en blanchir les phalanges. Puis il s'était levé, muet. Nous étions partis à la minute même.</p>
+
+    <p>Au cœur du portique d'Attale, près d'une colonne dorique entaillée par le temps, Orion s'arrêta si soudainement que je faillis le percuter. Son regard se fixa sur une crevasse minuscule dans le marbre antique, à hauteur de poitrine.</p>
+
+    <p class="dialogue">— Regarde, dit-il d'une voix basse, presque imperceptible.</p>
+
+    <p>Je me penchai. À première vue, rien d'autre que la poussière grise déposée par les siècles. Mais en observant l'angle d'attaque de la lumière, je distinguai un éclat verdâtre : une lame minuscule en bronze de Corinthe, fine comme une aiguille à coudre, fichée au plus profond de la fissure.</p>
+
+    <p>Orion la délogea du bout de son stylet. Ce n'était pas une arme. C'était un fragment de mécanisme, gratté d'incisions géométriques d'une délicatesse effrayante. Quatre traits gravés à la pointe de diamant qui, lorsqu'ils furent superposés à la carte écorchée qu'Iris avait abandonnée, redessinèrent exactement les crêtes rocheuses de Delphes.</p>
+
+    <p class="dialogue">— Delphes, soufflai-je. Le nombril du monde.</p>
+
+    <p class="dialogue">— Et le nid des mensonges les plus chers payés de la terre, répliqua Orion en repliant la carte.</p>
+
+    <p class="dialogue">— Ne vas-tu rien m'expliquer ? Toujours cette manie de jouer au sphinx ?</p>
+
+    <p class="dialogue">— Si je te donne la conclusion, Callista, ton esprit cessera de chercher. Et sur cette route, un esprit assoupi est un esprit mort.</p>
+
+    <p>Ce soir-là, alors que le crépuscule teintait l’Égée d'un violet profond, je compris que notre voyage ne faisait que commencer. Iris n'avait pas fui. Elle avait posé la première pierre d'un échiquier invisible, et quelqu'un dans l'ombre réorganisait déjà les pièces pour nous interdire le coup suivant.</p>
+  `
+},
+{
+  number: 2,
+  city: "DELPHES",
+  title: "Le Chant de la Pythie Mutilée",
+  epigraph: "« L'oracle ne ment pas. Il se contente d'offrir aux hommes le miroir fêlé de leurs propres désirs. »",
+  text: `
+    <p>Delphes était accrochée au flanc du mont Parnasse comme un rapace prêt à fondre sur la vallée du Plistos. Les roches Phaedriades reflétaient une lumière crue, aveuglante, tandis qu’un vent glacial descendait des sommets enneigés, charriant des effluves de laurier brûlé et de soufre.</p>
+
+    <p>Orion détestait cet endroit. Pour lui, la divination n'était que l'art d'habiller la politique avec des draperies sacrales. Il marchait sur la Voie Sacrée en observant non pas les monuments élevés par les cités victorieuses, mais l'usure des marches et l'épaisseur du cuir des sandales des gardes sanctuary.</p>
+
+    <p>La Pythie nous reçut dans la pénombre de l'Adyton. Assise sur son trépied d'airain, entourée d'une fumée d'encens si dense qu'elle piquait les yeux, sa voix ne semblait pas sortir de sa poitrine, mais des entrailles même de la terre :</p>
+
+    <p class="dialogue">— Iris de la Maison des Ombres est tombée. Son sang demande vengeance sur les plaines de l'Isthme, et le Cinquième Sceau sera brisé avant que la prochaine lune ne meure dans le ciel !</p>
+
+    <p>Un silence de plomb retomba sur la crypte. Je sentis une sueur froide couler le long de ma colonne vertébrale. Mais Orion ne cilla pas. Il fit un pas en avant, s'affranchissant du cordon d'interdiction sacrée.</p>
+
+    <p class="dialogue">— Qui vous a versé le poison d'or, Prêtresse ? demanda-t-il, la voix dénuée de tout respect superstitious.</p>
+
+    <p class="dialogue">— Je parle pour le Dieu Pythien ! cracha la femme, ses yeux révulsés trahissant soudain une terreur bien humaine.</p>
+
+    <p class="dialogue">— Le Dieu Pythien n'emploie pas de termes militaires corinthiens, fustigea Orion. Et il ne porte pas de sandales à double bride en cuir de Sparte, comme celles du garde standing à votre droite.</p>
+
+    <p>En un éclair, Orion désigna du doigt l'un des huit hommes d'armes entourant le sanctuaire. L'homme sursauta et porta la main à la garde de son xiphos. Ce n'était pas un serviteur d'Apollon, mais un émissaire de la ligue Péloponnésienne camouflé.</p>
+
+    <div class="ornamental-divider">✦ ✦ ✦</div>
+
+    <p>Pourtant, le véritable oracle ne vint pas de la bouche de la prêtresse manipulée. Alors que nous quittions la cité sainte sous un ciel d'orage, un jeune acolyte nous intercepta dans un renfoncement de la falaise. Sans un mot, il nous glissa un carré de lin rugueux maculé de cire rouge.</p>
+
+    <p>En dépliant l'étoffe à l'abri d'un pin parasol, nous y découvrîmes trois mots brodés au fil d'argent :</p>
+
+    <div class="clue-box">
+      <div class="clue-box-title">L'Étoffe de Delphes</div>
+      « IRIS AVAIT PRÉVU CELA. »
+    </div>
+
+    <p>Au verso du tissu, dans la doublure même du galon, une lettre minuscule avait été tracée avec une pointe trempée dans le fiel de bœuf : un <strong>L</strong> entrelacé d'une ancre marine.</p>
+
+    <p class="dialogue">— Loukas, murmura Orion. Le monastère fortifié du golfe.</p>
+
+    <p class="dialogue">— Si Iris avait prévu que la Pythie prononcerait une fausse prophétie pour déclencher la guerre, dis-je, cela signifie qu'elle contrôle les mensonges de nos ennemis.</p>
+
+    <p class="dialogue">— Ou qu'elle est l'architecte du mensonge lui-même, répliqua Orion d'un ton sombre. Et c'est la seule éventualité qui me fasse véritablement frissonner.</p>
+  `
+},
+{
+  number: 3,
+  city: "OSSIOS LOUKAS",
+  title: "La Fresque des Absents",
+  epigraph: "« Ce qui est effacé du livre des hommes brille parfois d'un éclat plus vif dans l'ombre des cryptes. »",
+  text: `
+    <p>Le monastère d'Ossios Loukas s'élevait comme un nid d'aigle au-dessus d'une mer d'oliviers d'un vert argenté. Les briques rouges de ses coupoles capturaient les derniers rayons d'un soleil agonisant, jetant sur les dalles de marbre des ombres longues comme des lances.</p>
+
+    <p>L'endroit semblait désert, baigné par le chant lancinant des cigales. Mais en passant sous le narthex, Orion retint mon bras.</p>
+
+    <p class="dialogue">— Trois hommes sur le chemin de ronde supérieur, whispering-il. Deux ont le regard fixe du garde en faction. Le troisième parcourt un parchemin.</p>
+
+    <p class="dialogue">— Les hommes armés sont notre cible ?</p>
+
+    <p class="dialogue">— Non. Celui qui lit est celui qui ordonne. Ne quitte jamais des yeux l'homme qui tient la plume quand d'autres tiennent la ferraille.</p>
+
+    <p>Nous nous glissâmes dans la crypte Sainte-Barbe, où l'air était frais, étouffé par l'odeur de la cire d'abeille et de la terre humide. Les murs étaient recouverts de fresques byzantines étincelantes d'or et de lapis-lazuli. Mais sur le mur occidental, une scène retint toute notre attention : une représentation des douze grandes cités du monde antique.</p>
+
+    <p>Au centre du panneau, une treizième figure avait été méthodiquement martelée. La couche d'enduit avait été grattée jusqu'à la pierre nue, laissant une ombre informe au milieu des dorures majestueuses.</p>
+
+    <p>Sous cette déchirure volontaire, une écriture fine, tracée d'une main ferme que je reconnus immédiatement, figurait en lettres rouges :</p>
+
+    <div class="clue-box">
+      <div class="clue-box-title">L'Inversion de Loukas</div>
+      « Ce qui manque au tableau n'a pas été détruit par haine.<br>
+      Cela a été retiré pour vous forcer à en devenir le contour. »
+    </div>
+
+    <p>Je m'approchai de la fresque. La poussière de plâtre fraîchement gratté recouvrait encore le sol. Iris était passée par là quelques jours à peine avant nous.</p>
+
+    <p class="dialogue">— Regarde la date du mortier d'origine, Callista, dit Orion en effleurant le marbre. L'homme dont le visage figurait ici a été condamné au silence il y a exactement vingt-deux ans.</p>
+
+    <p class="dialogue">— Vingt-deux ans... L'année où le fondateur des Ombres a été exécuté à Sparte ?</p>
+
+    <p class="dialogue">— Exécuté ? C'est ce que disent les chroniques officielles. Mais Iris nous montre autre chose. Cet homme n'a pas été tué. Il est devenu l'ombre que nous traquons aujourd'hui.</p>
+
+    <p class="dialogue">— Alors Iris ne cherche pas à fuir les Ombres, m'écriai-je, saisie d'une intuition fulgurante. Elle cherche à achever la guerre qu'il a commencée !</p>
+
+    <p>Orion se tourna vers moi, son regard d'acier adouci par une teinte d'inquiétude inédite.</p>
+
+    <p class="dialogue">— Et elle utilise notre vengeance comme la lame finale de sa propre machine.</p>
+  `
+},
+{
+  number: 4,
+  city: "OLYMPIE",
+  title: "Le Sang du Juge",
+  epigraph: "« Sur le stade d'Olympie, les hommes courent après la gloire. Dans l'ombre des portiques, ils courent pour sauver leur cou. »",
+  text: `
+    <p>Le bosquet sacré d'Altis à Olympie était étouffé sous une chaleur moite et lourde. Les grands platanes ne faisaient pas tomber la moindre brise sur les ruines colossales du temple de Zeus. Mais ce jour-là, l'air n'était pas seulement alourdi par l'été : il puait la mort fraîche.</p>
+
+    <p>Au pied des colonnes renversées de l'Héraion gisait le corps du général Agathon, l'un des arbitres les plus influents des jeux et conseiller secret du Sénat. La gorge était tranchée d'un trait si net que la poussière dorée sous sa tête s'était transformée en une croûte sombre et luisante.</p>
+
+    <p>Trois citoyens d'Élide s'époumonaient déjà près du prytanée, criant au sacrilège et désignant une silhouette féminine vêtue de voiles sombres qu'ils prétendaient avoir vue s'enfuir vers la rivière Cladée.</p>
+
+    <p>Orion ne prêta aucune attention aux cris. Il s'agenouilla près du cadavre, glissant ses doigts longs sous la nuque du défunt.</p>
+
+    <p class="dialogue">— Le sang est froid depuis le milieu de la nuit, déclara-t-il calmement.</p>
+
+    <p class="dialogue">— Mais ces hommes jurent l'avoir vue courir il y a moins d'une heure !</p>
+
+    <p class="dialogue">— Les hommes voient ce qu'on les paye pour voir, Callista. Regarde les fourmis sur sa tunique. Elles se déplacent en ligne droite depuis le bord du bois, ce qui signifie que le corps a été déposé ici il y a moins de vingt minutes, alors qu'il était déjà rigide depuis des heures.</p>
+
+    <p>Il se releva et balaya du regard la piste du stade désert. La ligne de départ en marbre blanc brillait sous le soleil de plomb.</p>
+
+    <p>Au centre de la piste, là où les coureurs posaient jadis leurs pieds nus, un sillon avait été tracé dans le sable fin à l'aide d'un bâton :</p>
+
+    <div class="clue-box">
+      <div class="clue-box-title">L'Inscription de la Piste</div>
+      « Ne cherchez pas qui a tué la victime.<br>
+      Demandez-vous quel mensonge sa mort rend irrésistible. »
+    </div>
+
+    <p>Je m'approchai du sol, observant les traces de pas qui entouraient le message. Une empreinte fine, très légèrement plus appuyée sur le talon gauche — la marque inconfondable de la démarche d'Iris.</p>
+
+    <p class="dialogue">— Elle était là, murmurai-je. Elle a regardé ces assassins déposer le corps.</p>
+
+    <p class="dialogue">— Elle ne les a pas seulement regardés, rectifia Orion en ramassant un jeton de bronze coincé sous la ligne de départ. Elle a utilisé leur mise en scène pour nous avertir. Le général Agathon s'apprêtait à vendre la flotte d'Élide aux factions spartiates. Sa mort n'est pas un crime : c'est un sabotage stratégique.</p>
+
+    <p class="dialogue">— Et Iris nous force à ramasser ses pièces tombées...</p>
+
+    <p class="dialogue">— En effet. Et le piège se referme avec une perfection terrifiante.</p>
+  `
+},
+{
+  number: 5,
+  city: "MYSTRAS",
+  title: "La Cité des Deux Vérités",
+  epigraph: "« Lorsque deux récits opposés prétendent à la vérité, la réalité est presque toujours le couteau qui a sculpté les deux versants. »",
+  text: `
+    <p>Mystras était une cascade de pierre et de tuiles rouges accrochée aux flancs sauvages du Mont Taygète. La cité Byzantine s'élevait en terrasses vertigineuses, dominant la plaine de Laconie embaumée par les citronniers en fleur.</p>
+
+    <p>Dans la bibliothèque haute du palais des Despotes, nous découvrîmes deux chroniques rédigées la même nuit, posées côte à côte sur un pupitre de noyer sculpté. Le premier manuscrit, frappé du sceau d'or de la ville, décrivait Iris comme une espionne vendue aux intérêts d'Athènes, trahissant la cause du Péloponnèse pour de l'or.</p>
+
+    <p>Le second manuscrit, caché dans la doublure d'un reliure en cuir de chèvre, la peignait comme une martyre héroïque qui avait sacrifié sa vie pour éviter la destruction de Sparte.</p>
+
+    <p>Orion considéra les deux parchemins avec un dédain souverain.</p>
+
+    <p class="dialogue">— Quel texte choisis-tu, Callista ? me demanda-t-il, un brin d'ironie dans la voix.</p>
+
+    <p class="dialogue">— Aucun des deux, répondis-je sans hésiter. L'un est trop noir pour être honnête, l'autre est trop blanc pour être vrai.</p>
+
+    <p>Orion laissa échapper un bref murmure d'approbation.</p>
+
+    <p class="dialogue">— Tu progresses. La vérité n'est jamais une couleur. C'est la lumière qui traverse le verre fêlé.</p>
+
+    <p>Il approcha une bougie des deux manuscrits. En chauffant le verso de la seconde feuille, des lettres réagirent à la chaleur, révélant un texte invisible tracé au jus d'oignon :</p>
+
+    <div class="clue-box">
+      <div class="clue-box-title">La Vérité Chauffée de Mystras</div>
+      « Le Cinquième Sceau n'est pas une clé de bronze ou de fer.<br>
+      C'est la frontière exacte où un homme cesse d'obéir à sa peur pour commencer à obéir à sa raison. »
+    </div>
+
+    <p>Je relus la phrase deux fois tandis que les flammes grignotaient le coin du papier antique.</p>
+
+    <p class="dialogue">— Le Sceau n'est pas un objet..., soufflai-je.</p>
+
+    <p class="dialogue">— Non, confirma Orion, le regard braqué sur les crêtes sombres du Taygète. C'est une doctrine. Une arme de manipulation de masse mise au point par les Ombres pour pousser les cités à s'entre-dévorer sans qu'un seul soldat étranger n'ait à franchir leurs portes.</p>
+
+    <p class="dialogue">— Et Iris a emporté cette doctrine avec elle.</p>
+
+    <p class="dialogue">— Pour la détruire... ou pour s'en servir comme du levier ultime.</p>
+  `
+},
+{
+  number: 6,
+  city: "SPARTE",
+  title: "La Scytale brisée",
+  epigraph: "« À Sparte, le silence n'est pas une absence de bruit. C'est une discipline de fer destinée à étouffer le cri des faibles. »",
+  text: `
+    <p>Sparte ne s'embarrassait pas de remparts ou de monuments somptueux. La cité n'était qu'un regroupement de bourgs austères, balayés par le vent frais de l'Eurotas, où chaque pierre semblait taillée pour résister aux hommes et aux siècles.</p>
+
+    <p>On nous conduisit sans un mot dans une salle hypostyle taillée à même le roc, sous l'acropole d'Hoplite. Un homme âgé, au visage sillonnée de cicatrices profondes, nous y attendait. Il portait le manteau rouge des Éphores et tenait entre ses mains osseuses un bâton de bois cylindrique : une scytale spartiate.</p>
+
+    <p class="dialogue">— Tu as le regard de ton père, Orion, dit le vieillard d'une voix sèche comme le frottement de deux boucliers. Il pensait lui aussi qu'il pouvait raisonner avec l'acier.</p>
+
+    <p class="dialogue">— Mon père est mort pour avoir cru à la parole de Sparte, répondit Orion, la voix sans inflexion.</p>
+
+    <p class="dialogue">— Il est mort parce qu'il n'a pas su lire le message jusqu'au bout, répliqua l'Éphore.</p>
+
+    <p>Il nous tendit une bande de parchemin étroit qui, enroulée autour du bâton, révélait une suite de lettres parfaites. Mais lorsque la bande fut déroulée, le texte redevenait un chaos incompréhensible.</p>
+
+    <p>Ce message n'était pas destiné à Orion. En observant la marque imprimée au fer rouge à l'extrémité du rouleau, je reconnus mes propres armoiries familiales.</p>
+
+    <div class="clue-box">
+      <div class="clue-box-title">Le Message de la Scytale</div>
+      « NE CROIS PAS TON MAÎTRE LORSQU'IL TE DIRA DE NE PAS REGARDER DERRIÈRE TOI.<br>
+      REGARDE PLUTÔT CE QU'IL A LAISSÉ DANS TON OMBRE. »
+    </div>
+
+    <p>Un frisson glacial parcourut mes épaules. Je me tournai brusquement vers Orion. Son visage n'exprimait aucune surprise, seulement une tristesse infinie, dissimulée au plus profond de ses puzilles.</p>
+
+    <p class="dialogue">— Tu me caches quelque chose depuis Athènes, n'est-ce pas ? dis-je, la voix tremblante d'une colère naissante.</p>
+
+    <p class="dialogue">— Je te protège du poids que tu n'es pas encore prête à porter, Callista.</p>
+
+    <p class="dialogue">— Je ne suis pas ton élève ! Je ne suis pas ta servante ! Je suis celle qui t'empêche de devenir un monstre !</p>
+
+    <p>L'Éphore laissa échapper un rire bref et rocailleux.</p>
+
+    <p class="dialogue">— Iris avait raison, murmura le vieillard. La fille a plus de fer dans le sang que le maître n'en a dans son épée. Poursuivez votre route vers Mycènes. C'est là que les rois apprennent comment meurent les dynasties.</p>
+  `
+},
+{
+  number: 7,
+  city: "MYCÈNES",
+  title: "Le Tombeau sans Roi",
+  epigraph: "« Les rois de Mycènes ont bâti des portes de lion pour terrifier le monde. Mais les vers ont mangé leurs os avec la même indifférence. »",
+  text: `
+    <p>La citadelle de Mycènes se dressait sous un ciel couleur de plomb fondu. La Porte des Lionnes, colossale et sombre, semblait garder l'entrée d'un royaume de fantômes. La poussière y avait un goût d'amertume et de fer fondu.</p>
+
+    <p>Nous descendîmes dans le cercle des tombes royales, jusqu'au tholos d'Atreus. La voûte d'immenses blocs de pierre s'élevait dans l'obscurité comme la ruche d'un dieu oublié. Au centre du tombeau vide, une stèle de marbre noir avait été érigée.</p>
+
+    <p>Douze encoches y avaient été taillées, symbolisant les douze étapes de notre quête. Mais à côté de la douzième encoche, un texte avait été gravé fraîchement, la poussière de pierre reposant encore sur le socle :</p>
+
+    <div class="clue-box">
+      <div class="clue-box-title">La Stèle de Mycènes</div>
+      « Douze décisions ont été prises par ceux qui vous ont précédés.<br>
+      La treizième décision ne sera pas écrite avec de l'encre, mais avec le sang de celui qui refusera d'obéir. »
+    </div>
+
+    <p>Je me tournai vers Orion, mon carnet de notes serré contre ma poitrine.</p>
+
+    <p class="dialogue">— Tu savais que cette stèle m'était destinée, dis-je calmement.</p>
+
+    <p class="dialogue">— Je le pressentais depuis le premier jour à Athènes, avoua-t-il sans détour.</p>
+
+    <p class="dialogue">— Et tu m'as laissée marcher à tes côtés, en sachant que le dénouement exigerait que l'un de nous deux échoue ?</p>
+
+    <p class="dialogue">— Je t'ai laissée marcher parce qu'Iris exigeait un esprit capable d'examiner le monde sans la souillure de mes propres rancœurs. Tu es la seule garantie que le Cinquième Sceau ne devienne pas une arme de destruction.</p>
+
+    <p>Je levai le poing et le frappai en pleine poitrine. Il ne fit pas un geste pour esquiver.</p>
+
+    <p class="dialogue">— Je te déteste pour ta froideur, Orion !</p>
+
+    <p class="dialogue">— Je sais, dit-il doucement. C'est la première fois que tu me dis la vérité sans chercher un mot d'esprit pour l'adoucir. Nous sommes enfin prêts pour Nauplie.</p>
+  `
+},
+{
+  number: 8,
+  city: "NAUPLIE",
+  title: "Le Miroir de Palamède",
+  epigraph: "« Le piège parfait ne retient pas le corps par des chaînes. Il offre à l'esprit la cage exacte qu'il a passé sa vie à chercher. »",
+  text: `
+    <p>Nauplie s'avançait dans la mer comme une lame de rasoir. La forteresse de Palamède couronnait la falaise vertigineuse, ses neufs cents marches taillées dans la roche montant vers les nuages comme une échelle dressée vers le néant.</p>
+
+    <p>L'air y était saturé de sel et du hurlement incessant du vent marin. C'était un lieu de solitude absolue, bâti pour les hommes qui ont renoncé aux illusions de la terre.</p>
+
+    <p>Au sommet du bastion le plus élevé, dans une cellule balayée par les embruns, nous ne trouvâmes ni soldat ni trésor. Seulement un grand miroir d'argent poli, fixé au mur de pierre, et une lettre scellée posée sur un piédestal d'ébène.</p>
+
+    <p>La lettre était signée du Grand Maître des Ombres. Elle offrait un marché simple : la restitution d'Iris, saine et sauve, en échange du renoncement immédiat à notre quête du Sceau.</p>
+
+    <p>Orion regarda le miroir. Son reflet y apparaissait, vieilli, creusé par la fatigue et la haine accumulée pendant des décennies.</p>
+
+    <p>Puis, il lut le texte gravé au bas du cadre d'argent :</p>
+
+    <div class="clue-box">
+      <div class="clue-box-title">L'Avertissement du Miroir</div>
+      « Vous ne pouvez pas délivrer une prisonnière qui a conçu elle-même les barreaux de sa cellule.<br>
+      Regardez votre reflet : qui est le véritable captive ? »
+    </div>
+
+    <p>Un silence immense retomba sur le bastion, seulement rompu par le fracas des vagues contre les rochers, deux cents mètres plus bas.</p>
+
+    <p class="dialogue">— Elle n'a jamais été enlevée, murmurai-je en posant ma main sur l'épaule d'Orion. Elle s'est retirée du monde pour nous contraindre à regarder ce que nous sommes devenus sans elle.</p>
+
+    <p>Orion ne répondit rien. Pour la première fois depuis que je le connaissais, une larme unique glissa le long de sa joue balafrée, traçant un sillon propre dans la poussière de sa peau avant de s'évaporer dans le vent de Nauplie.</p>
+  `
+},
+{
+  number: 9,
+  city: "ÉPIDAURE",
+  title: "Le Théâtre du Silence",
+  epigraph: "« L'écho ne répète pas la vérité. Il amplifie le cri de celui qui a peur d'écouter le silence. »",
+  text: `
+    <p>Le grand théâtre d'Épidaure s'ouvrait dans le flanc de la colline comme une oreille gigantesque tendue vers le ciel. La symétrie des gradins de calcaire blanc était si parfaite qu'elle imposait le respect à quiconque osait en franchir le seuil.</p>
+
+    <p>Orion marcha jusqu'au centre exact de l'orchestra. Il se tourna vers moi, alors que j'étais assise au tout dernier rang supérieur, cinquante mètres plus haut.</p>
+
+    <p class="dialogue">— Ne dis plus un mot pendant une heure, Callista, me cria-t-il. Sa voix, pourtant à peine timbrée, me parvint avec une clarté cristalline, comme s'il murmurait à mon oreille.</p>
+
+    <p>Je tins bon pendant vingt minutes dans ce silence absolu, écoutant le souffle du vent dans les pins et le battement de mon propre cœur. Puis je cédai.</p>
+
+    <p class="dialogue">— Pourquoi m'imposes-tu cette épreuve ? criai-je à mon tour.</p>
+
+    <p class="dialogue">— Parce que les Ombres prospèrent sur le bruit que font les hommes pour couvrir leur propre terreur, me répondit sa voix limpide. Épidaure a été bâtie pour nous apprendre ceci : la plus grande vérité n'exige pas la voix d'un tyran. Elle exige une oreille capable d'entendre le murmure des innocents.</p>
+
+    <p>Il posa sa main sur la pierre d'autel au centre de la scène. Sous la dalle, un compartiment secret s'ouvrit, libérant un rouleau de parchemin jauni :</p>
+
+    <div class="clue-box">
+      <div class="clue-box-title">La Leçon d'Épidaure</div>
+      « La guerre ne commence pas avec le premier coup d'épée.<br>
+      Elle commence lorsque le mot d'un seul homme parvient à convaincre dix mille citoyens que leur voisin est un monstre. »
+    </div>
+
+    <p>Je descendis les gradins à grands pas pour le rejoindre au centre de la scène.</p>
+
+    <p class="dialogue">— Iris voulait que nous démantelions le réseau de fausses rumeurs créé par les Ombres, dis-je.</p>
+
+    <p class="dialogue">— Plus que cela, répondit Orion. Elle voulait que nous soyons les premiers à refuser d'écouter leur musique de sang.</p>
+  `
+},
+{
+  number: 10,
+  city: "TIRYNTHE",
+  title: "Les Murs Cyclopéens",
+  epigraph: "« Les géants ont dressé ces pierres pour se protéger du ciel. Mais la trahison s'est glissée par la porte des serviteurs. »",
+  text: `
+    <p>Tirynthe n'était pas une cité d'hommes : c'était une montagne sculptée par des titans. Des blocs de pierre de plusieurs tonnes, ajustés sans mortier, formaient de sombres galeries voûtées où l'air étouffant sentait le salpêtre et la chauve-souris.</p>
+
+    <p>Nous nous enfonçâmes dans les boyaux secrets sous la citadelle. C'est là, dans une salle aveugle éclairée par nos seules torche de résine, que nous découvrîmes les véritables archives des Ombres.</p>
+
+    <p>Des milliers de fiches de papyrus classées par cités, répertoriant les faiblesses, les dettes et les vices de chaque dirigeant du Péloponnèse. Et au centre de la pièce, sur une table d'ardoise, un registre ouvert à mon propre nom : <em>Callista de la Maison des Vents</em>.</p>
+
+    <p>La date de ma mort y était inscrite. Une date qui correspondait exactement au troisième jour après notre arrivée prévue à Corinthe.</p>
+
+    <p>Je sentis le sol se dérober sous mes pas. Orion s'empara du registre et parcourut la page d'un regard fiévreux.</p>
+
+    <p class="dialogue">— Ce n'est pas une prophétie, dit-il d'une voix rauque. C'est leur plan d'exécution.</p>
+
+    <p class="dialogue">— Iris savait-elle cela ? m'écriai-je, saisie par la panique.</p>
+
+    <p>Au bas de la feuille, une note rédigée de la main d'Iris avait été ajoutée dans la marge :</p>
+
+    <div class="clue-box">
+      <div class="clue-box-title">L'Annotation de Tirynthe</div>
+      « ORION NE DOIT PAS CONNAÎTRE LA FIN DE CE REGISTRE.<br>
+      CAR S'IL APPREND LE PRIX DE LA VICTOIRE, IL CHOISIRA DE BRÛLER LE MONDE POUR TE SAUVER. »
+    </div>
+
+    <p>Orion referma brutalement le registre d'ardoise dans un claquement de tonnerre qui fit trembler la voûte d'immenses pierres.</p>
+
+    <p class="dialogue">— Nous partons pour Ermioni immédiatemment, ordonna-t-il, son visage redevenu un masque de fer absolu. Et que les dieux aident quiconque se mettra en travers de ma route.</p>
+  `
+},
+{
+  number: 11,
+  city: "ERMIONI",
+  title: "Où la Mer se Tait",
+  epigraph: "« Au bout du rivage d'Ermioni, il n'y a plus de cités, plus de guerres, plus de masques. Seul le grand miroir bleu de la mer renvoie aux hommes leur propre vide. »",
+  text: `
+    <p>Ermioni s'avançait comme un doigt de terre desséché dans les eaux d'un bleu presque noir du golfe Argolique. Le port était silencieux, les barques de pêcheurs bercées par le clapotis monotone d'une marée sans fin.</p>
+
+    <p>Dans une crique isolée, masquée par des pins maritimes pliés par les tempêtes, nous découvrîmes une petite embarcation échouée sur le sable fin. Sur le banc de nage était posé le carnet personnel d'Iris — celui-là même qu'elle portait toujours contre son cœur.</p>
+
+    <p>Je m'en emparai d'une main tremblante. Les pages de parchemin étaient gondolées par le sel, mais l'écriture demeurait parfaitement lisible :</p>
+
+    <div class="clue-box">
+      <div class="clue-box-title">L'Ultimatum d'Ermioni</div>
+      « Si vous lisez ces lignes ensemble, c'est que vous avez survécu aux pièges des Ombres et à vos propres démons.<br><br>
+      Sachez la vérité : le Cinquième Sceau n'a jamais été un trésor à protéger.<br>
+      C'est un verdict à prononcer.<br><br>
+      À Corinthe, vous ne trouverez pas la paix. Vous trouverez le couteau et le choix final. »
+    </div>
+
+    <p>Orion contempla l'horizon marin où le ciel et l'eau se confondaient dans une brume dorée.</p>
+
+    <p class="dialogue">— Tu comprends ce qu'elle nous demande ? murmura-t-il.</p>
+
+    <p class="dialogue">— Elle nous demande d'être les juges d'un monde qui a oublié la valeur de la justice.</p>
+
+    <p class="dialogue">— Non, Callista. Elle nous demande si nous sommes prêts à pardonner à ceux qui nous ont tout pris.</p>
+
+    <p>Il posa sa main lourde sur ma tête, dans un geste de tendresse si paternel et si inattendu que les larmes me montèrent aux yeux. Le dernier voyage vers Corinthe pouvait commencer.</p>
+  `
+},
+{
+  number: 12,
+  city: "CORINTHE",
+  title: "Le Cinquième Sceau & Le Secret d'Iris",
+  epigraph: "« Rien ne s'achève jamais là où l'on croyait arriver. La fin du voyage est seulement le miroir où commence la première véritable question. »",
+  text: `
+    <p>Nous arrivâmes à Corinthe au premier rayon de l'aube. L'Acrocorinthe dressait sa masse sombre au-dessus des deux mers, baignée dans une lumière de sang et d'or. La cité était déserte, frappée par un silence de tombeau que seule rompait la brise de l'Isthme.</p>
+
+    <p>Nous grimpâmes jusqu'au temple supérieur de Poséidon, là où la roche dominait les deux mondes. Pas d'armée pour nous attendre. Pas de piège mortel. Seulement une vaste salle de marbre blanc balayée par les vents, au centre de laquelle se trouvait une table de pierre, deux chaises, et une ampoule de verre contenant un liquide d'un noir absolu : l'encre du Cinquième Sceau.</p>
+
+    <p>À côté de l'ampoule posée sur le marbre froid, une ultime lettre déployée nous attendait, maintenue par le stilet d'or d'Iris :</p>
+
+    <div class="clue-box">
+      <div class="clue-box-title">Le Testament Final d'Iris</div>
+      « Mon cher Orion, ma précieuse Callista.<br><br>
+      Si vos yeux lisent ces mots, c'est que la chaîne des illusions brisées est enfin complète. Vous cherchiez un Sceau, croyant qu'il s'agissait d'une arme ou d'un secret d'État. Le Cinquième Sceau est le pouvoir de réécrire l'histoire des hommes en effaçant les dettes de sang qui les enchaînent à la vengeance.<br><br>
+      L'ampoule d'encre sombre posée devant vous contient le seul poison capable de détruire le réseau des Ombres : la vérité mise à nu sur chaque cité du Péloponnèse. Mais si vous versez cette encre sur le monde, les cités s'effondreront sous le poids de leur propre honte, et la guerre sera totale.<br><br>
+      Si vous choisissez de briser l'ampoule et d'oublier mon nom, le monde continuera de dormir dans ses mensonges confortables, mais vous serez libres.<br><br>
+      Le choix n'appartient plus aux fantômes du passé. Il appartient à la fille qui a appris à douter et à l'homme qui a réappris à aimer.<br><br>
+      Je vous laisse la plume. L'histoire est désormais la vôtre. »
+    </div>
+
+    <div class="ornamental-divider">✦ ✦ ✦</div>
+
+    <p>Un silence éternel sembla s'installer sur le sommet de l'Acrocorinthe. Orion fixa la fiole d'encre noire, puis me regarda. Ses yeux d'acier ne reflétaient plus la haine, mais une paix souveraine et terrible.</p>
+
+    <p class="dialogue">— Qu'allons-nous décider, Callista ? demanda-t-il d'une voix douce.</p>
+
+    <p>Je m'approchai de la table, saisis la fiole d'encre entre mes mains tièdes, et levai les yeux vers l'horizon sans fin où se croisaient les douze vents de la Grèce.</p>
+
+    <div class="choice-section">
+      <div class="choice-title">LE DÉNOUEMENT EST ENTRE VOS MAINS</div>
+      <div class="choice-desc">Quelle sera la treizième décision de Callista et d'Orion pour le monde antique ?</div>
+      <div class="choice-buttons">
+        <button class="btn-choice" onclick="finishStory('truth')">VERSER L'ENCRE (Révéler la Vérité Absolue)</button>
+        <button class="btn-choice" onclick="finishStory('peace')">BRISER LA FIOLE (Choisir le Pardon & la Paix)</button>
+      </div>
+    </div>
+  `
+}
+];
+
+/* ============================================================
+   APP LOGIC & STATE
+   ============================================================ */
+let unlockedChapters = JSON.parse(localStorage.getItem('sealed_unlocked_ch') || '[1]');
+let currentActiveChapter = 1;
+let synth = window.speechSynthesis;
+
+function init() {
+  renderCodex();
+  updateProgressUI();
+  
+  // Enter key support on password input
+  document.getElementById('codeInput').addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+      verifyCode();
     }
+  });
+}
 
-    function openChapter(num) {
-      selectedChapter = num;
-      const isUnlocked = localStorage.getItem(`chapter_${num}_unlocked`) === 'true';
+function renderCodex() {
+  const grid = document.getElementById('chapterGrid');
+  grid.innerHTML = '';
 
-      if (isUnlocked) {
-        showContent(num);
-      } else {
-        showAuth(num);
-      }
+  chapters.forEach(ch => {
+    const isUnlocked = unlockedChapters.includes(ch.number);
+    const card = document.createElement('div');
+    card.className = `chapter-card ${isUnlocked ? '' : 'locked'}`;
+    card.onclick = () => openChapter(ch.number);
+
+    card.innerHTML = `
+      <div>
+        <div class="card-num">CHAPITRE ${ch.number}</div>
+        <div class="card-city">${ch.city}</div>
+        <div class="card-title-sub">${ch.title}</div>
+      </div>
+      <div class="card-status">
+        ${isUnlocked ? '🔓 Ouvert' : '🔒 Verrouillé'}
+      </div>
+    `;
+
+    grid.appendChild(card);
+  });
+}
+
+function updateProgressUI() {
+  const maxUnlocked = Math.max(...unlockedChapters);
+  document.getElementById('progressStepNum').innerText = maxUnlocked;
+  const pct = (maxUnlocked / 12) * 100;
+  document.getElementById('progressBarFill').style.width = `${pct}%`;
+}
+
+function openChapter(num) {
+  currentActiveChapter = num;
+  if (unlockedChapters.includes(num)) {
+    displayChapterReader(num);
+  } else {
+    displayAuthPanel(num);
+  }
+}
+
+function displayAuthPanel(num) {
+  document.getElementById('viewCodex').classList.add('hidden');
+  document.getElementById('viewReader').classList.add('hidden');
+  document.getElementById('viewAuth').classList.remove('hidden');
+
+  document.getElementById('authTitle').innerText = `Sceau de ${chapters[num - 1].city}`;
+  document.getElementById('codeInput').value = '';
+  document.getElementById('errorMsg').style.display = 'none';
+}
+
+function verifyCode() {
+  const input = document.getElementById('codeInput').value.trim().toUpperCase();
+  const targetCode = CODES[currentActiveChapter];
+
+  if (input === targetCode) {
+    if (!unlockedChapters.includes(currentActiveChapter)) {
+      unlockedChapters.push(currentActiveChapter);
+      localStorage.setItem('sealed_unlocked_ch', JSON.stringify(unlockedChapters));
     }
+    updateProgressUI();
+    renderCodex();
+    displayChapterReader(currentActiveChapter);
+  } else {
+    const err = document.getElementById('errorMsg');
+    err.style.display = 'block';
+    err.innerText = `Mot de passe incorrect. Le sceau de ${chapters[currentActiveChapter - 1].city} refuse de rompre.`;
+  }
+}
 
-    function showAuth(num) {
-      document.getElementById('menu-view').classList.add('hidden');
-      document.getElementById('content-view').classList.add('hidden');
-      document.getElementById('auth-view').classList.remove('hidden');
-      document.getElementById('auth-title').innerText = `Séance ${num}`;
-      document.getElementById('passcode-input').value = '';
-      document.getElementById('error-msg').style.display = 'none';
-      stopTTS();
-    }
+function displayChapterReader(num) {
+  stopReading();
+  const ch = chapters[num - 1];
 
-    function verifyPasscode() {
-      const input = document.getElementById('passcode-input').value.trim().toUpperCase();
-      
-      if (input === PASSCODES[selectedChapter]) {
-        localStorage.setItem(`chapter_${selectedChapter}_unlocked`, 'true');
-        showContent(selectedChapter);
-      } else {
-        document.getElementById('error-msg').style.display = 'block';
-      }
-    }
+  document.getElementById('viewCodex').classList.add('hidden');
+  document.getElementById('viewAuth').classList.add('hidden');
+  document.getElementById('viewReader').classList.remove('hidden');
 
-    function showContent(num) {
-      document.getElementById('menu-view').classList.add('hidden');
-      document.getElementById('auth-view').classList.add('hidden');
-      document.getElementById('content-view').classList.remove('hidden');
+  document.getElementById('chLocation').innerText = `— ${ch.city} —`;
+  document.getElementById('chTitle').innerText = ch.title;
+  document.getElementById('chEpigraph').innerText = ch.epigraph;
+  document.getElementById('chNarrative').innerHTML = ch.text;
 
-      const data = CHAPTERS[num];
-      document.getElementById('chapter-title').innerText = data.title;
-      document.getElementById('chapter-body').innerText = data.text;
-      stopTTS();
-    }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 
-    function showMenu() {
-      document.getElementById('content-view').classList.add('hidden');
-      document.getElementById('auth-view').classList.add('hidden');
-      document.getElementById('menu-view').classList.remove('hidden');
-      stopTTS();
-      renderGrid();
-    }
+function showCodex() {
+  stopReading();
+  document.getElementById('viewReader').classList.add('hidden');
+  document.getElementById('viewAuth').classList.add('hidden');
+  document.getElementById('viewCodex').classList.remove('hidden');
+}
 
-    function toggleTTS() {
-      if (isSpeaking) {
-        stopTTS();
-      } else {
-        const text = document.getElementById('chapter-body').innerText;
-        ttsUtterance = new SpeechSynthesisUtterance(text);
-        ttsUtterance.lang = 'fr-FR';
-        ttsUtterance.rate = 0.9;
-        
-        ttsUtterance.onend = () => {
-          isSpeaking = false;
-          document.getElementById('tts-btn').innerText = '🔊 ÉCOUTER LE TEXTE';
-        };
+/* ============================================================
+   JOURNAL SYSTEM
+   ============================================================ */
+function toggleJournal() {
+  const modal = document.getElementById('journalModal');
+  modal.classList.toggle('active');
 
-        window.speechSynthesis.speak(ttsUtterance);
-        isSpeaking = true;
-        document.getElementById('tts-btn').innerText = '⏹ ARRÊTER';
-      }
-    }
+  if (modal.classList.contains('active')) {
+    renderJournalEntries();
+  }
+}
 
-    function stopTTS() {
-      if (window.speechSynthesis) {
-        window.speechSynthesis.cancel();
-      }
-      isSpeaking = false;
-      const btn = document.getElementById('tts-btn');
-      if (btn) btn.innerText = '🔊 ÉCOUTER LE TEXTE';
-    }
+function renderJournalEntries() {
+  const container = document.getElementById('journalEntriesList');
+  container.innerHTML = '';
 
-    renderGrid();
-  </script>
+  const activeEntries = unlockedChapters.sort((a,b) => a - b);
+
+  activeEntries.forEach(num => {
+    const ch = chapters[num - 1];
+    const entry = document.createElement('div');
+    entry.className = 'journal-entry';
+    entry.innerHTML = `
+      <div class="journal-entry-city">Étape ${ch.number} — ${ch.city}</div>
+      <div class="journal-entry-text">${ch.epigraph}</div>
+    `;
+    container.appendChild(entry);
+  });
+}
+
+/* ============================================================
+   CHOICE ENDINGS FOR CHAPTER 12
+   ============================================================ */
+function finishStory(type) {
+  const narrativeBox = document.getElementById('chNarrative');
+
+  if (type === 'truth') {
+    narrativeBox.innerHTML += `
+      <div class="clue-box" style="border-left-color: var(--crimson-seal); margin-top: 40px;">
+        <div class="clue-box-title">ÉPILOGUE — La Vérité Absolue</div>
+        <p>Callista décapita la fiole d'encre sur le marbre blanc de l'Acrocorinthe. La liqueur sombre s'écoula sur le sol avant de s'infiltrer dans les aqueducs antiques, portant les confessions révélées jusqu'aux oreilles de chaque citoyen de la Grèce.</p>
+        <p>Les empires vacillèrent, les tyrans tombèrent sous le poids de la honte démasquée, mais de la cendre des mensonges naquit une ère nouvelle où nul homme ne put plus se cacher derrière le masque des divinités.</p>
+      </div>
+    `;
+  } else {
+    narrativeBox.innerHTML += `
+      <div class="clue-box" style="border-left-color: var(--gold-primary); margin-top: 40px;">
+        <div class="clue-box-title">ÉPILOGUE — Le Pardon Sacré</div>
+        <p>Callista éleva l'ampoule d'encre au-dessus du gouffre de l'Isthme et la laissa tomber dans le vide bleu. Le flacon se brisa sur les récifs, dispersant son secret invincible dans l'immensité sans mémoire de la mer.</p>
+        <p>Orion sourit, enleva son manteau d'acier, et pour la première fois de sa vie, marcha vers l'avenir sans se retourner. Les guerres s'éteignirent d'elles-mêmes, privées du carburant de la haine transmise.</p>
+      </div>
+    `;
+  }
+
+  window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+}
+
+/* ============================================================
+   SPEECH SYNTHESIS (AUDIO READER)
+   ============================================================ */
+function readStory() {
+  stopReading();
+  const textContainer = document.getElementById('chNarrative');
+  const cleanText = textContainer.innerText;
+
+  if ('speechSynthesis' in window) {
+    const utterance = new SpeechSynthesisUtterance(cleanText);
+    utterance.lang = 'fr-FR';
+    utterance.rate = 0.95;
+    synth.speak(utterance);
+  } else {
+    alert("La synthèse vocale n'est pas supportée par votre navigateur.");
+  }
+}
+
+function stopReading() {
+  if ('speechSynthesis' in window && synth.speaking) {
+    synth.cancel();
+  }
+}
+
+// Launch
+window.onload = init;
+</script>
 </body>
 </html>
+
