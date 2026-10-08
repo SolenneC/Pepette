@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>L'Équation d'Iris — Le Cinquième Sceau</title>
+<title>L'Équation d'Iris</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600&display=swap');
@@ -60,28 +60,12 @@ header {
   margin-bottom: 25px;
 }
 
-.small-title {
-  color: var(--gold2);
-  font-family: Cinzel, serif;
-  letter-spacing: 5px;
-  font-size: .75rem;
-  text-transform: uppercase;
-  margin-bottom: 12px;
-}
-
 h1 {
   font-family: Cinzel, serif;
   font-size: clamp(2rem, 6vw, 3.8rem);
   color: var(--gold2);
   letter-spacing: 4px;
   text-shadow: 0 0 25px rgba(239, 211, 138, .2);
-}
-
-.subtitle {
-  margin-top: 12px;
-  font-size: 1.25rem;
-  font-style: italic;
-  color: #d9d1bd;
 }
 
 .progress {
@@ -122,12 +106,13 @@ h1 {
   color: #c9c0ac;
 }
 
+/* Style uniforme du parchemin pour éviter le changement de luminosité */
 .paper {
-  background: linear-gradient(rgba(255, 255, 255, .15), rgba(255, 255, 255, .15)), var(--paper);
+  background: var(--paper);
   color: var(--ink);
   border: 1px solid #8e754b;
   border-radius: 5px;
-  box-shadow: 0 25px 70px rgba(0, 0, 0, .45);
+  box-shadow: 0 25px 70px rgba(0, 0, 0, .6);
   padding: clamp(22px, 5vw, 50px);
   position: relative;
 }
@@ -197,6 +182,7 @@ h1 {
 .chapter-name {
   font-family: Cinzel, serif;
   font-size: 1rem;
+  min-height: 1.2em;
 }
 
 .chapter-status {
@@ -328,13 +314,6 @@ input {
   color: #604f3e;
 }
 
-.separator {
-  text-align: center;
-  color: #a58345;
-  margin: 30px 0;
-  letter-spacing: 8px;
-}
-
 .clue {
   border-left: 4px solid var(--gold);
   background: rgba(180, 140, 60, .09);
@@ -386,9 +365,7 @@ input {
 <div class="container">
 
 <header>
-  <div class="small-title">Chronique des Douze Vents</div>
   <h1>L'ÉQUATION D'IRIS</h1>
-  <div class="subtitle">Le Cinquième Sceau</div>
 </header>
 
 <div class="progress">
@@ -403,7 +380,7 @@ input {
 
 <!-- MENU -->
 <div id="menu" class="paper">
-  <div class="section-title">Le Codex des Douze Étapes</div>
+  <div class="section-title">Le Cinquième Sceau</div>
   <div class="section-subtitle">
     « Certaines routes conduisent à des lieux. Les meilleures conduisent à des vérités. »
   </div>
@@ -418,7 +395,7 @@ input {
 <!-- AUTH -->
 <div id="auth" class="paper hidden">
   <div class="auth">
-    <button class="back" onclick="showMenu()">← Revenir au codex</button>
+    <button class="back" onclick="showMenu()">← Revenir au journal</button>
 
     <h2 id="authTitle">Déblocage du Chapitre</h2>
 
@@ -447,7 +424,7 @@ input {
 <!-- CHAPITRE / LECTEUR -->
 <div id="reader" class="paper hidden">
 
-  <button class="back" onclick="showMenu(); stopReading();">← Revenir au codex</button>
+  <button class="back" onclick="showMenu(); stopReading();">← Revenir au journal</button>
 
   <div class="chapter-head">
     <div class="location" id="chapterLocation"></div>
@@ -537,355 +514,182 @@ const CODES = {
 };
 
 /* ============================================================
-   RÉCIT COMPLET — LES 12 CHAPITRES
+   RÉCIT — LES 12 CHAPITRES
    ============================================================ */
 const chapters = [
 {
   number: 1,
-  city: "ATHÈNES",
-  title: "Le jour où Iris disparut",
+  city: "",
+  title: "L'Ombre de l'Acropole",
   epigraph: "« Un secret n'est jamais enterré. Il attend simplement quelqu'un qui sache creuser au bon endroit. »",
   text: `
-<p>Il y a des matins où une ville semble savoir quelque chose que vous ignorez.</p>
-<p>Athènes était ainsi.</p>
-<p>Le soleil venait à peine de franchir les collines lorsque nous traversâmes l'Agora. Les marchands criaient, les ânes protestaient, les philosophes discutaient de choses dont personne n'avait demandé l'avis, et Orion avançait au milieu de tout cela avec l'expression de quelqu'un qui venait de découvrir une faute d'orthographe dans le monde.</p>
-<p class="dialogue">— Tu pourrais sourire, lui dis-je.</p>
-<p class="dialogue">— Pourquoi ?</p>
-<p class="dialogue">— Pour faire croire aux gens que tu es heureux.</p>
-<p class="dialogue">— Je ne travaille pas dans la propagande.</p>
-<p>Je soupirai.</p>
-<p class="dialogue">— C'est dommage. Tu aurais fait un excellent tyran.</p>
-<p>Il tourna enfin la tête vers moi.</p>
-<p class="dialogue">— Et toi, une excellente catastrophe diplomatique.</p>
-<p>Je notai mentalement la remarque. <em>Première victoire de la journée : Orion avait presque souri.</em> Ce fut probablement la dernière.</p>
-<div class="separator">✦ ✦ ✦</div>
-<p>Nous étions venus pour Iris.</p>
-<p>Trois semaines auparavant, elle avait disparu. Pas de cadavre. Pas de lettre de menace. Seulement une chambre vide, une carte de la Grèce retirée du mur et une phrase écrite au dos d'un vieux registre :</p>
+<p>Le soleil se couchait sur Athènes. Nous marchions l’un derrière l’autre, Orion devant, guidant comme toujours la voie, et moi, Callista, je le suivais de près, sur ses talons. Nous arrivions enfin à l’Acropole, après une journée harassante.</p>
+<p>La lumière dorée du crépuscule glissait sur les colonnes de marbre du Parthénon, découpant de longues ombres noires sur la pierre chaude. La ville sous nos pieds commençait à s'éteindre dans le murmure du soir, mais ici, au sommet, le silence était presque oppressant. Le vent frais de l'Attique balayait la poussière de nos tuniques et rafraîchissait nos visages brûlés par le trajet.</p>
+<p>Orion s'arrêta brusquement. Il leva la main pour me faire signe de ne plus bouger.</p>
+<p class="dialogue">— Qu'est-ce qu'il y a ? chuchotai-je en ajustant la lanière de mon sac de toile.</p>
+<p class="dialogue">— On ne nous a pas attendus, répondit-il d'une voix basse, sans se retourner.</p>
+<p>Je dépassai son épaule pour regarder. Au pied de la statue d'Athéna, l'accès à la petite crypte sous les dalles était ouvert. La grille en fer forgé, d'ordinaire scellée, pendait hors de ses gonds, tordue.</p>
+<p>Je sentis un frisson me traverser le dos. La relique d'Éleusis que nous transportions n'était que la moitié du puzzle. L'autre moitié — le registre révélant l'emplacement du Cinquième Sceau — était censée reposer à l'abri sous ces dalles.</p>
+<p class="dialogue">— Tu penses que ce sont les Ombres ? demandai-je en posant instinctivement la main sur la dague à ma ceinture.</p>
+<p>Orion s'accroupit près de la grille, observant les traces dans la poussière. Un détail attira son attention : une marque fraîche gravée à même la pierre, sous la charnière tordue. Trois lignes entrelacées formant une fleur stylisée.</p>
+<p class="dialogue">— Non, dit-il en redressant la tête avec un regard où se mêlaient la surprise et l'inquiétude. Pas les Ombres. Iris. Elle est passée ici il y a moins de deux heures, et elle nous a laissé un message.</p>
+<p>Orion n'hésita pas. Il glissa sa main dans l'ouverture, écarta la grille brisée dans un grincement étouffé et s'engouffra le premier dans l'escalier de pierre qui s'enfonçait sous le temple. Je le suivis sans attendre. L'air y était lourd, frais, saturé d'une odeur de poussière antique et de cire brûlée. À la lueur de la faible lanterne qu'Orion alluma, les parois de marbre semblaient suinter de mystère.</p>
+<p>Au centre de la petite salle souterraine, un autel de pierre se dressait. Dessus, le coffre en bronze qui devait protéger le registre était grand ouvert, vide. Mais à côté, gravé à la hâte avec la pointe d'une lame, se trouvait le message d'Iris :</p>
 <div class="clue">
-« Ne cherchez pas où je suis allée.<br>
-Cherchez pourquoi je voulais que vous y alliez. »
+« Le Sceau ne protège pas un trésor, il protège un mensonge. Rejoignez-moi à Delphes avant que les Ombres ne comprennent ce que vous portez. »
 </div>
-<p>Orion avait lu la phrase une fois. Puis il avait pris son manteau. Depuis, nous marchions. Je pensais que nous poursuivions Iris. Orion savait déjà que nous faisions autre chose.</p>
-<p>Au pied d'une colonne de l'Agora, il s'arrêta.</p>
-<p class="dialogue">— Là.</p>
-<p>Je regardai. Rien.</p>
-<p class="dialogue">— C'est impressionnant, observai-je. Tu arrives à voir le vide avec une concentration remarquable.</p>
-<p>Il ignora la remarque. Son doigt désigna une fissure dans la pierre. À l'intérieur se trouvait une minuscule lame de bronze. Pas une arme. Un fragment de mécanisme. Sur le métal, quatre lignes formaient un dessin incompréhensible.</p>
-<p>Orion sortit la carte d'Iris. Il posa le fragment dessus. Les lignes correspondaient exactement au contour d'une montagne.</p>
-<p class="dialogue">— Delphes, dit-il.</p>
-<p class="dialogue">— C'est tout ? Pas d'explication ?</p>
-<p class="dialogue">— Si je t'explique tout, Callista, tu n'apprendras rien.</p>
-<p class="dialogue">— Je pourrais aussi simplement dire que tu ne sais pas.</p>
-<p>Il me regarda. Un sourire minuscule apparut au coin de ses lèvres.</p>
-<p class="dialogue">— Voilà. Maintenant tu réfléchis.</p>
-<p>Nous quittâmes Athènes avant midi. Ce soir-là, dans notre campement, je relus le message d'Iris. Pour la première fois, je compris quelque chose : elle ne nous demandait pas de la retrouver. Elle nous demandait de comprendre. Et quelque part, quelqu'un avait très peur que nous y arrivions.</p>
-<div class="clue">
-Premier indice : le symbole d'Iris n'indique jamais une destination.<br>
-Il indique une question.
-</div>
+<p class="dialogue">— Un mensonge... répétai-je à voix basse. Qu'est-ce que ça veut dire ?</p>
+<p class="dialogue">— Ça veut dire que toute notre quête repose sur une illusion, répondit Orion, la voix sombre.</p>
+<p>Avant même que je puisse lui demander d'en dire plus, un bruit métallique résonna au-dessus de nous, suivi du choc d'une sandale sur les marches de pierre.</p>
+<p class="thought">Clac. Clac.</p>
+<p>Quelqu'un descendait. Orion éteignit la lanterne d'un geste sec, nous plongeant instantanément dans une obscurité totale. Il me tira doucement par le bras pour me coller contre le renfoncement d'une colonne. Sa main se posa sur la garde de son glaive.</p>
+<p>En haut des marches, une silhouette grande, drapée d'un lourd manteau sombre, se découpa contre la lumière mourante du dehors.</p>
+<p class="dialogue">— Je sais que vous êtes là, Orion, déclara une voix grave qui fit résonner les murs. Rends-moi le morceau d'Éleusis, et je te laisserai quitter Athènes vivant.</p>
+<p>Orion ne bougea pas d'un pouce. Dans le noir, sa voix s'éleva, calme et détachée :</p>
+<p class="dialogue">— Tu es bien loin de tes terres pour venir réclamer du bronze dans les ruines d'Athènes. Lysandre... Les Ombres envoient donc leurs meilleurs chiens de chasse désormais. Mais si vous cherchez le morceau d'Éleusis avec autant de hâte, c'est que vous avez compris que le registre sous cet autel est vide. Iris a toujours eu trois coups d'avance sur vous.</p>
+<p>Un rire sec et sans joie sortit de la pénombre.</p>
+<p class="dialogue">— Iris est une fugitive, cracha Lysandre en faisant un pas de plus. Elle croit manipuler le destin avec ses petites énigmes. Mais sans le Cinquième Sceau, sa « vérité » n'est qu'un chiffon de papier. Donne-moi le fragment, Callista. Je sais que tu le portes dans ton sac.</p>
+<p>Je sursautai dans le noir, serrant le sac contre mon flanc.</p>
+<p class="dialogue">— Elle ne te donnera rien, intervint Orion pour masquer ma position. Mais dis-moi ce que les Ombres espèrent accomplir à Delphes. La Pythie ne vend plus ses oracles à des mercenaires.</p>
+<p class="dialogue">— Delphes n'est qu'une étape. La Pythie dira ce que nous lui ordonnerons de dire, et les cités grecques s'entre-déchireront avant la fin de la lune.</p>
+<p>À mes côtés, je sentis Orion se tendre. Le silence se figea quand Lysandre tira lentement sa lame du fourreau.</p>
+<p class="dialogue">— Callista... chuchota Orion, si bas que seule moi pouvais l'entendre. Prépare-toi.</p>
+<p>En un éclair, Orion saisit sa propre lame et bondit hors du renfoncement. Le choc de l'acier contre l'acier résonna dans la crypte avec le fracas d'un coup de tonnerre, faisant voler des étincelles qui éclairèrent un instant les visages crispés des deux hommes.</p>
+<p class="dialogue">— Cours ! me harla Orion en repoussant l'assaut brut de Lysandre.</p>
+<p>Je n'hésitai pas une seconde. Pressant le sac de toile contenant le fragment contre ma poitrine, je m'élançai vers l'escalier. Lysandre tenta de couper ma trajectoire d'un revers de lame, mais Orion s'interposa avec hargne, bloquant l'attaque et forçant son adversaire à reculer vers l'autel.</p>
+<p>Je franchis les marches quatre à quatre, le cœur battant à rompre dans ma poitrine. En déboulant à l'air libre sur l'esplanade du Parthénon, le vent de la nuit frappa mon visage. Derrière moi, sous la terre, les bruits de ferraille et les coups étouffés continuaient de résonner.</p>
+<p>Seule dans la nuit tombante d'Athènes, le fragment sur le dos, je savais ce qui me restait à faire : trouver un moyen de fuir la cité et prendre la route de Delphes, en priant pour qu'Orion me rejoigne vivant.</p>
 `
 },
 {
   number: 2,
-  city: "DELPHES",
-  title: "La prophétie qui mentait",
-  epigraph: "« Le problème avec les prophéties, c'est que les hommes les écrivent toujours après les événements. »",
-  text: `
-<p>Delphes dominait la vallée comme un tribunal construit par les dieux. Orion n'aimait pas les tribunaux : il prétendait qu'ils avaient trop de bancs et pas assez de logique.</p>
-<p>La Pythie nous reçut avant le coucher du soleil. Elle prononça nos noms avant même que nous ayons passé le seuil. Elle annonça qu'un grand massacre approchait, qu'Iris avait trahi la ligue et que le Cinquième Sceau devait être retrouvé avant la prochaine lune.</p>
-<p>Puis elle nous fixa de ses yeux sombres. Orion ne cilla pas.</p>
-<p class="dialogue">— Qui vous a payée pour nous raconter cela ? demanda-t-il calmement.</p>
-<p>Un silence glacial s'installa.</p>
-<p class="dialogue">— Je parle au nom d'Apollon ! s'indigna la prêtresse.</p>
-<p class="dialogue">— Ce n'est pas ce que j'ai demandé, répliqua Orion.</p>
-<p>Je retins un rire. Orion observait les gardes alignés le long des colonnes. Leurs sandales, leurs lances, la poussière sur leurs manteaux.</p>
-<p class="dialogue">— Combien de gardes, Callista ? murmura-t-il.</p>
-<p class="dialogue">— Huit.</p>
-<p class="dialogue">— Regarde mieux.</p>
-<p>Je recomptai. Sept lances étaient en bronze d'Athènes, parfaitement entretenues. La huitième était en fer de Corinthe, piquée de rouille.</p>
-<p class="dialogue">— Le huitième n'est pas un garde du temple, dis-je. C'est un homme d'armes du Péloponnèse.</p>
-<p class="dialogue">— Progrès remarquable, hocha Orion.</p>
-<p>La prophétie n'était pas une révélation divine : c'était un message commandé pour nous pousser à la faute. Mais la véritable surprise vint après notre départ. Un gamin de la ville nous glissa un morceau de parchemin scellé dans notre sac.</p>
-<p>À l'intérieur, trois mots écrits de la main d'Iris :</p>
-<div class="clue">
-« IRIS AVAIT PRÉVU CELA. »
-</div>
-<p>Orion fixa le parchemin. Il comprit avant moi : Iris n'avait pas seulement laissé des indices. Elle savait exactement qui allait tenter de nous manipuler, à quel endroit et à quel moment.</p>
-<p class="dialogue">— Elle a monté ce théâtre, murmurai-je.</p>
-<p class="dialogue">— Non, corrigea Orion. Elle a laissé les acteurs jouer leur rôle, en s'assurant que nous aurions les yeux ouverts.</p>
-`
+  city: "",
+  title: "",
+  epigraph: "",
+  text: `<p>Texte du chapitre 2 à venir...</p>`
 },
 {
   number: 3,
-  city: "HOSIOS LOUKAS",
-  title: "La fresque des absents",
-  epigraph: "« Les morts sont parfois les meilleurs témoins. Ils ne peuvent plus changer leur version. »",
-  text: `
-<p>Le monastère suspendu dans les collines semblait désert. Mais le silence d'Hosios Loukas était trop lourd pour être vide.</p>
-<p>Dans la crypte, sous la lumière tamisée de nos torches, nous découvrîmes une immense fresque représentant douze cités grecques unies sous la même bannière. Mais le visage du treizième personnage, à la droite du chef, avait été méthodiquement gratté au burin.</p>
-<p>Iris avait gravé une seule ligne au bas du cadre :</p>
-<div class="clue">
-« Ce qui manque est parfois plus important que ce qui demeure. »
-</div>
-<p>Je m'approchai de la fresque. Les contours effacés laissaient deviner un homme portant le blason d'une organisation que l'on croyait éteinte depuis un siècle : <em>Les Ombres du Péloponnèse</em>.</p>
-<p class="dialogue">— Ce n'est pas une société secrète récente, analysai-je en touchant la pierre. La peinture date de vingt ans. C'est l'année de ma naissance.</p>
-<p>Orion me regarda attentivement. Il avait ce regard particulier, celui qu'il prenait lorsqu'il assemblait des pièces d'un échiquier invisible.</p>
-<p class="dialogue">— Les Ombres ne cherchent pas à détruire les cités, Callista. Elles pensent que la guerre est le seul état naturel des hommes, et que contrôler le conflit est la seule façon de maintenir l'ordre.</p>
-<p class="dialogue">— Et Iris ?</p>
-<p class="dialogue">— Iris pensait qu'un homme capable de prévoir la guerre pouvait l'empêcher... ou la rendre inutile.</p>
-<p>Dans l'ombre de la crypte, nous entendîmes le déclic d'une arbalète qu'on arme. Orion ne se retourna même pas.</p>
-<p class="dialogue">— Tu as mis trop de temps à tirer, dit-il à l'inconnu tapis dans le noir. Maintenant, Callista est derrière toi.</p>
-<p>C'était un mensonge éhonté : j'étais juste à côté de lui. Mais la seconde d'hésitation de l'agresseur suffit à Orion pour renverser le lourd brasero de bronze. L'obscurité devint totale, et nous nous éclipsâmes dans les souterrains.</p>
-`
+  city: "",
+  title: "",
+  epigraph: "",
+  text: `<p>Texte du chapitre 3 à venir...</p>`
 },
 {
   number: 4,
-  city: "OLYMPIE",
-  title: "Le meurtre qui n'en était pas un",
-  epigraph: "« Pour trouver le coupable, demandez-vous d'abord qui avait intérêt à ce que vous le cherchiez. »",
-  text: `
-<p>À Olympie, nous trouvâmes un cadavre dans le gymnase en ruine. Un magistrat d'Athènes, la gorge tranchée. Dans sa main crispée, un bout de tissu rouge déchiré d'un manteau que je reconnus immédiatement : celui d'Iris.</p>
-<p>Tout accusait Iris. Les gardes de la ville étaient déjà sur les dents.</p>
-<p>Orion s'accroupit près du corps. Il examina le sang coagulé, la position des jambes, puis la poussière sous les sandales du défunt.</p>
-<p class="dialogue">— Il n'est pas mort ici, dit-il.</p>
-<p class="dialogue">— Comment le sais-tu ?</p>
-<p class="dialogue">— Les fourmis, Callista.</p>
-<p class="dialogue">— Pardon ?</p>
-<p class="dialogue">— Regarde ce chemin de fourmis. Elles traversent le sang sans s'arrêter. Le sang a été versé à froid, apporté ici dans une fiole pour créer une scène d'exécution. Le corps a été tué il y a plus de douze heures dans un lieu fermé.</p>
-<p>Je secouai la tête, médusée.</p>
-<p class="dialogue">— Tu viens vraiment de résoudre un meurtre en observant des fourmis ?</p>
-<p class="dialogue">— Elles sont plus rigoureuses que la plupart des juges d'Athènes, répondit-il avec un flegme imperturbable.</p>
-<p>En fouillant la doublure du magistrat, nous découvrîmes non pas de l'or, mais une correspondance chiffrée avec les chefs de guerre de Sparte. Le meurtre avait été orchestré par les Ombres pour faire accuser Iris et déclencher une guerre préventive entre cités.</p>
-<div class="clue">
-« Le piège parfait est celui qui donne à la victime la satisfaction de croire qu'elle a compris. »
-</div>
-<p>Orion me tendit la lettre chiffrée.</p>
-<p class="dialogue">— À toi de déchiffrer la suite, Callista. Si tu te trompes, Sparte marche sur Athènes dans dix jours.</p>
-`
+  city: "",
+  title: "",
+  epigraph: "",
+  text: `<p>Texte du chapitre 4 à venir...</p>`
 },
 {
   number: 5,
-  city: "MYSTRAS",
-  title: "Les ombres du Péloponnèse",
-  epigraph: "« Une cité qui ne repose que sur la force des armes s'effondre au premier coup de vent philosophique. »",
-  text: `
-<p>Mystras s'accrochait au rocher comme une citadelle de fantômes. C'est ici que nous rencontrâmes pour la première fois un émissaire direct des Ombres. Il se faisait appeler Lysandre.</p>
-<p>Il ne nous attaqua pas. Il nous offrit du vin et du pain au sommet d'une tour surplombant la plaine.</p>
-<p class="dialogue">— Vous cherchez le Cinquième Sceau, nous dit Lysandre avec une grande courtoisie. Vous pensez qu'il s'agit d'un mécanisme ou d'un trésor. Mais la vérité est que la Grèce est une machine rouillée. Les hommes ont besoin de crises pour se régénérer. Les Ombres ne font qu'accélérer l'inévitable pour éviter des siècles de souffrance.</p>
-<p>Ses arguments étaient effroyablement bien structurés. Pendant un instant, la logique du monstre semblait presque raisonnable.</p>
-<p>Je regardai Orion, m'attendant à ce qu'il démontre les failles logiques du discours. Mais Orion se contenta de poser son verre.</p>
-<p class="dialogue">— Votre raisonnement a un seul défaut, Lysandre.</p>
-<p class="dialogue">— Et quel est-il ?</p>
-<p class="dialogue">— Vous supposez que les hommes sont des variables prévisibles dans une équation fixe. Mais vous oubliez la seule chose que ni vous, ni moi, ne pouvons calculer : le choix absurde d'un individu prêt à sacrifier sa stratégie par amour ou par devoir.</p>
-<p>Orion se leva. Lysandre fit un signe de la main, et quatre hommes armés surgirent des ombres.</p>
-<p class="dialogue">— Tu avais prévu cela ? me murmura Orion.</p>
-<p class="dialogue">— Tu es le maître stratège, non ? répliquai-je. C'était à toi de le prévoir !</p>
-<p class="dialogue">— J'ai prévu que tu aurais pris la clé de la herse pendant qu'il me parlait.</p>
-<p>Je tirai la clé de ma poche avec un sourire triomphant. Nous sautâmes par la poterne au moment où la grille en fer s'abattait entre nous et les gardes.</p>
-`
+  city: "",
+  title: "",
+  epigraph: "",
+  text: `<p>Texte du chapitre 5 à venir...</p>`
 },
 {
   number: 6,
-  city: "SPARTE",
-  title: "Le silence des guerriers",
-  epigraph: "« La parole sert à cacher la pensée. Le silence, lui, dit toujours la vérité. »",
-  text: `
-<p>Sparte ne s'embarrassait pas de grands temples ou de philosophies bavardes. La cité était un camp militaire à ciel ouvert, rigide et menaçant.</p>
-<p>Nous étions recherchés. Pour traverser la ville sans être arrêtés, nous devions décoder un message laissé par Iris sur une scytale — un bâton de bois autour duquel était enroulée une bande de cuir couverte de lettres dans le désordre.</p>
-<p>Orion observait le bâton avec une frustration rare chez lui.</p>
-<p class="dialogue">— Le diamètre du bâton ne correspond à aucun modèle spartiate classique, grogna-t-il.</p>
-<p>Je pris le bâton de ses mains. Je regardai le grain du bois, l'usure de la bande de cuir.</p>
-<p class="dialogue">— Ce n'est pas le diamètre du bâton qui compte, Orion. Regarde comment les lettres s'alignent si l'on enroule la bande en suivant l'angle de tes doigts.</p>
-<p>Je fis tourner le cuir. Le texte apparut clairement sous nos yeux :</p>
-<div class="clue">
-« La force de Sparte n'est pas dans son armée, mais dans sa peur de la faiblesse. Utilisez sa peur. »
-</div>
-<p>Orion me fixa, manifestement impressionné, bien qu'il tentât de le masquer.</p>
-<p class="dialogue">— Pas mal pour une archiviste.</p>
-<p class="dialogue">— Je ne suis plus seulement ton archiviste, Orion. Je commence à lire tes pensées avant toi.</p>
-<p class="dialogue">— Ne commence pas à prendre de grands airs, Callista. Tu as encore trois coups de retard sur ma prochaine erreur.</p>
-<p>Grâce aux indications d'Iris, nous réussîmes à convaincre le conseil des Éphores que la menace athénienne était une fabrication des Ombres. Nous avions évité une guerre immediate, mais la piste d'Iris nous menait désormais vers les ruines antiques des Rois-Guerriers : Mycènes.</p>
-`
+  city: "",
+  title: "",
+  epigraph: "",
+  text: `<p>Texte du chapitre 6 à venir...</p>`
 },
 {
   number: 7,
-  city: "MYCÈNES",
-  title: "La porte des Lions",
-  epigraph: "« Les rois passent, les pierres restent, et les secrets s'enfoncent sous la terre. »",
-  text: `
-<p>Sous la monumentale Porte des Lions de Mycènes, l'air était lourd du souvenir des empires disparus.</p>
-<p>C'est ici que l'intrigue prit un tournant inattendu. Dans le tombeau d'Atreus, nous découvrîmes non pas un indice sur le Cinquième Sceau, mais des documents secrets rédigés par Iris dix ans plus tôt. Des documents décrivant... Orion.</p>
-<p>Je lus les lignes à haute voix à la lumière de la lanterne :</p>
-<div class="clue">
-« Orion voit le monde comme une table d'échecs. Son intelligence est sans égale, mais son cœur est scellé. Pour qu'il comprenne le Cinquième Sceau, il devra cesser d'analyser et apprendre à transmettre. Callista sera son miroir. »
-</div>
-<p>Un silence immense s'installa dans la voûte de pierre.</p>
-<p>Je regardai Orion. Pour la première fois depuis que je le connaissais, ses yeux ne scrutaient pas l'environnement à la recherche d'une menace ou d'un mécanisme. Il semblait soudain vulnérable, touché au plus profond de son être.</p>
-<p class="dialogue">— Elle savait... murmura-t-il.</p>
-<p class="dialogue">— Elle te connaissait mieux que tu ne te connais toi-même, dis-je doucement.</p>
-<p class="dialogue">— Et elle t'a choisie, Callista. Ce voyage n'est pas ma quête. C'est ton apprentissage.</p>
-<p>Je me rendis compte alors de la vérité : chaque énigme, chaque cité, chaque danger traversé depuis Athènes n'avait pas été conçu pour nous mener à un trésor enfoui, mais pour façonner notre duo, pour transformer la disciple en stratège et le maître en guide.</p>
-`
+  city: "",
+  title: "",
+  epigraph: "",
+  text: `<p>Texte du chapitre 7 à venir...</p>`
 },
 {
   number: 8,
-  city: "NAUPLIE",
-  title: "Le fort des conspirateurs",
-  epigraph: "« Quand le plateau d'échecs s'effondre, seuls les fous continuent de jouer selon les règles. »",
-  text: `
-<p>Au fort de Nauplie, dominant la mer Égée, les Ombres du Péloponnèse nous tendirent leur piège ultime.</p>
-<p>Acculés au sommet de la citadelle par une douzaine d'hommes armés menés par Lysandre lui-même, nous n'avions plus d'issue. La mer mugissait cent mètres plus bas contre les rochers.</p>
-<p class="dialogue">— C'est la fin de la partie, Orion, déclara Lysandre en tirant son épée. Donnez-moi la carte complète d'Iris, et je laisserai la jeune fille vivre.</p>
-<p>Orion fit un pas en avant. Il n'avait aucune arme.</p>
-<p class="dialogue">— Vous n'avez toujours pas compris qui est le véritable danger ici, Lysandre, dit-il d'une voix d'une tranquillité terrifiante.</p>
-<p class="dialogue">— Vous êtes désarmé et encerclé !</p>
-<p class="dialogue">— Moi, oui. Mais Callista ne l'est pas.</p>
-<p>Pendant qu'Orion captait toute leur attention par sa seule présence imposante, j'avais actionné le mécanisme d'évacuation d'eau de la citerne du fort, identifié dix minutes plus tôt. Des milliers de litres d'eau se déversèrent sur la terrasse avec la force d'un torrent, balayant la garde des Ombres.</p>
-<p>Dans la confusion, Orion saisit mon bras :</p>
-<p class="dialogue">— Saute ! cria-t-il en me désignant la baie en contrebas.</p>
-<p>Nous sautâmes dans le vide, rejoignant les eaux sombres de la mer au moment où le fort s'embrasait.</p>
-`
+  city: "",
+  title: "",
+  epigraph: "",
+  text: `<p>Texte du chapitre 8 à venir...</p>`
 },
 {
   number: 9,
-  city: "ÉPIDAURE",
-  title: "L'écho de la vérité",
-  epigraph: "« Au centre du grand théâtre, le plus faible chuchotement peut être entendu par des milliers d'hommes. »",
-  text: `
-<p>Trempés et épuisés, nous atteignîmes le théâtre d'Épidaure au petit matin. L'acoustique de ce lieu antique était légendaire : une pièce de bronze tombée au centre de la scène s'entendait jusqu'au dernier rang des gradins.</p>
-<p>Orion se tint au centre exact de la scène circulaire. Je montai jusqu'au dernier rang, tout en haut de la colline.</p>
-<p class="dialogue">— M'entends-tu, Callista ? chuchota-t-il.</p>
-<p>Sa voix retentit à mes oreilles comme s'il était debout à côté de moi.</p>
-<p class="dialogue">— Je t'entends, Orion.</p>
-<p class="dialogue">— Alors écoute bien. Nous approchons du terme. Le Cinquième Sceau n'a jamais été une arme pour contrôler la Grèce. Iris a découvert une vérité géopolitique capable de détruire l'idéologie des Ombres sans verser une goutte de sang.</p>
-<p class="dialogue">— Quelle vérité ?</p>
-<p class="dialogue">— Les Ombres prétendent que les cités sont condamnées à se détruire. Mais le véritable moteur des guerres grecques n'est pas la haine : c'est le mensonge sur les origines de leurs traités secrets. Iris a rassemblé les véritables chartes créatrices des cités.</p>
-<div class="clue">
-« La vérité n'a pas besoin de crier pour terrasser le mensonge ; il lui suffit d'être entendue par les bonnes personnes. »
-</div>
-<p>Depuis le sommet des gradins, je compris la portée du plan d'Iris : nous n'avions pas besoin d'une armée. Nous avions seulement besoin de faire entendre la vérité depuis une tribune où personne ne pourrait la faire taire.</p>
-`
+  city: "",
+  title: "",
+  epigraph: "",
+  text: `<p>Texte du chapitre 9 à venir...</p>`
 },
 {
   number: 10,
-  city: "TIRYNTHE",
-  title: "Les murs des cyclopes",
-  epigraph: "« Plus les murailles sont épaisses, plus la peur de celui qui s'y enferme est grande. »",
-  text: `
-<p>Les murailles cyclopéennes de Tirynthe étaient faites de blocs de pierre si gigantesques que les hommes croyaient que des géants les avaient bâties.</p>
-<p>C'est à l'intérieur de ces galeries obscurcies que nous fumes rejoints par les derniers survivants des Ombres. Mais cette fois, nous n'étions plus les traqués : nous étions les maîtres du terrain.</p>
-<p>Orion et moi utilisâmes l'architecture des galeries pour diviser leurs forces, utilisant les échos et les fausses pistes pour les mener dans un cul-de-sac stratégique.</p>
-<p>Lorsque Lysandre se retrouva seul face à nous, acculé contre un mur de vingt tonnes, il refusa d'abandonner son idéologie.</p>
-<p class="dialogue">— Vous pouvez me neutraliser, dit-il, mais vous ne changerez pas la nature humaine ! La guerre reviendra !</p>
-<p class="dialogue">— Vous avez raison, répondis-je en m'avançant devant Orion. La guerre reviendra si les hommes restent ignorants. Mais nous venons de distribuer les écrits d'Iris à tous les messagers des douze cités. L'équation est résolue, Lysandre. Votre guerre n'aura pas lieu.</p>
-<p>Lysandre comprit qu'il avait perdu non pas par les armes, mais par l'intelligence et l'anticipation. Il déposa son épée dans la poussière.</p>
-`
+  city: "",
+  title: "",
+  epigraph: "",
+  text: `<p>Texte du chapitre 10 à venir...</p>`
 },
 {
   number: 11,
-  city: "ERMIONI",
-  title: "Le phare dans la nuit",
-  epigraph: "« Quand la tempête fait rage, la lumière ne cherche pas à combattre la mer : elle indique simplement la route. »",
-  text: `
-<p>À Ermioni, au bord du rivage où le vent marin soufflait sans relâche, nous trouvâmes le dernier relais avant le dénouement. Un ancien phare désaffecté dressé face à l'horizon.</p>
-<p>Au sommet de la tour, dans une petite pièce balayée par les embruns, se trouvait le dernier coffre d'Iris. Il ne contenait ni or, ni bijoux, ni relique magique.</p>
-<p>Il contenait deux objets : une carte complète de notre itinéraire depuis Athènes, annotée de sa main, et une lettre à notre intention.</p>
-<p>Orion me laissa ouvrir la lettre. Mes mains tremblaient légèrement.</p>
-<div class="clue">
-« Si vous lisez ceci, c'est que vous avez traversé la Grèce sans vous perdre et sans vous détruire. Orion, tu as appris qu'un stratège sans humanité n'est qu'un joueur aveugle. Callista, tu as appris que ton intuition et ta compassion sont des armes stratégiques plus puissantes que n'importe quelle armée. Le Cinquième Sceau vous attend à Corinthe. »
-</div>
-<p>Orion posa sa main sur mon épaule. Ce geste simple, d'une pudeur infinie, valait tous les discours du monde.</p>
-<p class="dialogue">— Es-tu prête pour la fin du voyage, Callista ?</p>
-<p class="dialogue">— Nous sommes prêts, Orion. Ensemble.</p>
-`
+  city: "",
+  title: "",
+  epigraph: "",
+  text: `<p>Texte du chapitre 11 à venir...</p>`
 },
 {
   number: 12,
-  city: "CORINTHE",
-  title: "L'Équation d'Iris",
-  epigraph: "« Le trésor n'est pas au bout de la route. La route était le trésor. »",
-  text: `
-<p>Sur l'Acrocorinthe, la haute citadelle embrassant à la fois la mer de Grèce et le golfe de Corinthe, le voyage touchait à sa fin.</p>
-<p>Au centre de la ruine du temple, une grande table de pierre gravée portait douze encoches, correspondant aux douze fragments de bronze que nous avions récoltés dans chaque cité.</p>
-<p>Orion et moi placions les pièces une à une. Athènes, Delphes, Hosios Loukas, Olympie, Mystras, Sparte, Mycènes, Nauplie, Épidaure, Tirynthe, Ermioni... Et enfin Corinthe.</p>
-<p>Lorsque la dernière pièce s'enclencha, un mécanisme ancien déclencha l'ouverture d'un réceptacle au centre de la table. À l'intérieur se trouvait un miroir de bronze poliment travaillé et un petit rouleau de parchemin.</p>
-<p>Pas de Sceau magique. Pas d'arme dévastatrice.</p>
-<p>Je déroulai le parchemin ultime d'Iris :</p>
-<div class="clue">
-« Le Cinquième Sceau n'a jamais été un objet.<br><br>
-Les quatre premiers sceaux étaient la Force, la Stratégie, la Vérité et la Mémoire.<br>
-Le Cinquième Sceau est la Transmutation Humaine : l'alliance entre la sagesse d'un maître et l'éveil d'une disciple.<br><br>
-Vous avez cherché une arme, mais vous avez construit une alliance indestructible. La Grèce ne sera pas sauvée par un objet secret, mais par des êtres devenus capables de comprendre les hommes et de guider les cités sans tyrannie.<br><br>
-Regardez dans le miroir : le Cinquième Sceau, c'est vous. »
-</div>
-<p>Un grand silence s'éleva sur la montagne. Orion regarda le miroir, puis il posa son regard sur moi. Un vrai sourire, radieux et empreint d'une fierté paternelle retenue, illumina son visage habituellement si austère.</p>
-
-<p class="dialogue">— Elle a réussi, murmura Orion.</p>
-<p class="dialogue">— Elle nous a réussis, corrigai-je doucement.</p>
-
-<p>Le soleil se levait sur la mer Égée, dorant les ruines de Corinthe. Le voyage prenait fin, mais nous savions tous les deux que l'aventure de notre vie ne faisait que commencer.</p>
-`
+  city: "",
+  title: "",
+  epigraph: "",
+  text: `<p>Texte du chapitre 12 à venir...</p>`
 }
 ];
 
-
 /* ============================================================
-   LOGIQUE DE L'APPLICATION
+   LOGIQUE DE NAVIGATION ET DE GESTION DES CHAPITRES
    ============================================================ */
-
-// Progression enregistrée dans le localStorage (par défaut chapitre 1)
-let unlockedChapter = parseInt(localStorage.getItem('equation_iris_unlocked')) || 1;
-let currentTargetChapter = 1;
-
-function saveProgress(ch) {
-  if (ch > unlockedChapter && ch <= 12) {
-    unlockedChapter = ch;
-    localStorage.setItem('equation_iris_unlocked', unlockedChapter);
-  }
-}
+let unlockedChapter = parseInt(localStorage.getItem('unlockedChapter')) || 1;
+let selectedChapter = null;
+let currentUtterance = null;
 
 function updateProgressUI() {
-  document.getElementById('progressFill').style.width = ((unlockedChapter / 12) * 100) + '%';
-  document.getElementById('progressNumber').textContent = unlockedChapter;
+  const fill = document.getElementById('progressFill');
+  const num = document.getElementById('progressNumber');
+  const percentage = (unlockedChapter / 12) * 100;
+  fill.style.width = percentage + '%';
+  num.textContent = unlockedChapter;
 }
 
-function renderMenu() {
-  updateProgressUI();
+function renderGrid() {
   const grid = document.getElementById('chapterGrid');
   grid.innerHTML = '';
 
   chapters.forEach(ch => {
     const isUnlocked = ch.number <= unlockedChapter;
-    const card = document.createElement('div');
-    card.className = `chapter ${isUnlocked ? '' : 'locked'}`;
-    
-    card.innerHTML = `
-      <div class="chapter-number">ÉTAPE ${ch.number} — ${ch.city}</div>
-      <div class="chapter-name">${ch.title}</div>
-      <div class="chapter-status">${isUnlocked ? '✓ Disponible' : '🔒 Verrouillé'}</div>
-    `;
+    const div = document.createElement('div');
+    div.className = `chapter ${isUnlocked ? '' : 'locked'}`;
+    div.onclick = () => handleChapterClick(ch.number);
 
-    card.onclick = () => handleChapterClick(ch.number);
-    grid.appendChild(card);
+    div.innerHTML = `
+      <div class="chapter-number">CHAPITRE ${ch.number}</div>
+      <div class="chapter-name">${ch.title}</div>
+      <div class="chapter-status">${isUnlocked ? '✓ Accessible' : '🔒 Verrouillé'}</div>
+    `;
+    grid.appendChild(div);
   });
 }
 
-function handleChapterClick(chNum) {
-  if (chNum <= unlockedChapter) {
-    openReader(chNum);
-  } else if (chNum === unlockedChapter + 1) {
-    openAuth(chNum);
+function handleChapterClick(number) {
+  if (number <= unlockedChapter) {
+    openReader(number);
+  } else if (number === unlockedChapter + 1) {
+    openAuth(number);
   } else {
-    alert("Vous devez résoudre les étapes précédentes avant d'accéder à celle-ci.");
+    alert("Vous devez débloquer les chapitres précédents dans l'ordre !");
   }
 }
 
-function openAuth(chNum) {
-  currentTargetChapter = chNum;
-  document.getElementById('authTitle').textContent = `CHAPITRE ${chNum} — ${chapters[chNum-1].city}`;
+function openAuth(number) {
+  selectedChapter = number;
+  document.getElementById('authTitle').textContent = `Déblocage du Chapitre ${number}`;
   document.getElementById('codeInput').value = '';
   document.getElementById('error').style.display = 'none';
-  
+
   document.getElementById('menu').classList.add('hidden');
   document.getElementById('reader').classList.add('hidden');
   document.getElementById('auth').classList.remove('hidden');
@@ -893,61 +697,56 @@ function openAuth(chNum) {
 
 function verifyCode() {
   const input = document.getElementById('codeInput').value.trim().toUpperCase();
-  const expected = CODES[currentTargetChapter];
+  const correctCode = CODES[selectedChapter];
 
-  if (input === expected) {
-    saveProgress(currentTargetChapter);
-    openReader(currentTargetChapter);
+  if (input === correctCode) {
+    unlockedChapter = selectedChapter;
+    localStorage.setItem('unlockedChapter', unlockedChapter);
+    updateProgressUI();
+    openReader(selectedChapter);
   } else {
     document.getElementById('error').style.display = 'block';
   }
 }
 
-function openReader(chNum) {
-  const ch = chapters[chNum - 1];
-  
-  document.getElementById('chapterLocation').textContent = `Étape ${ch.number} • ${ch.city}`;
-  document.getElementById('chapterTitle').textContent = ch.title;
+function openReader(number) {
+  const ch = chapters.find(c => c.number === number);
+  if (!ch) return;
+
+  document.getElementById('chapterLocation').textContent = ch.city;
+  document.getElementById('chapterTitle').textContent = ch.title ? `${ch.number} : ${ch.title}` : `${ch.number}`;
   document.getElementById('chapterEpigraph').textContent = ch.epigraph;
   document.getElementById('story').innerHTML = ch.text;
 
   document.getElementById('menu').classList.add('hidden');
   document.getElementById('auth').classList.add('hidden');
   document.getElementById('reader').classList.remove('hidden');
-  
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  window.scrollTo(0, 0);
 }
 
 function showMenu() {
+  stopReading();
+  renderGrid();
   document.getElementById('auth').classList.add('hidden');
   document.getElementById('reader').classList.add('hidden');
   document.getElementById('menu').classList.remove('hidden');
-  renderMenu();
 }
 
-
 /* ============================================================
-   SYNTHÈSE VOCALE (MODE ÉCOUTE)
+   SYNTHÈSE VOCALE (LECTEUR AUDIO)
    ============================================================ */
-
 function readStory() {
   stopReading();
-  
-  const textContainer = document.getElementById('story');
-  if (!textContainer) return;
-
-  // Extraction propre du texte sans balises HTML
-  const cleanText = textContainer.innerText;
+  const storyElement = document.getElementById('story');
+  const textToRead = storyElement.innerText;
 
   if ('speechSynthesis' in window) {
-    const utterance = new SpeechSynthesisUtterance(cleanText);
-    utterance.lang = 'fr-FR';
-    utterance.rate = 0.95; // Rythme de lecture agréable
-    utterance.pitch = 1.0;
-
-    window.speechSynthesis.speak(utterance);
+    currentUtterance = new SpeechSynthesisUtterance(textToRead);
+    currentUtterance.lang = 'fr-FR';
+    currentUtterance.rate = 0.95;
+    window.speechSynthesis.speak(currentUtterance);
   } else {
-    alert("La synthèse vocale n'est pas supportée sur ce navigateur.");
+    alert("La synthèse vocale n'est pas supportée par votre navigateur.");
   }
 }
 
@@ -957,10 +756,10 @@ function stopReading() {
   }
 }
 
-
-// Initialisation au chargement de la page
-renderMenu();
-
+/* Initialisation au chargement */
+updateProgressUI();
+renderGrid();
 </script>
+
 </body>
 </html>
