@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>L'Équation d'Iris</title>
-
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600&display=swap');
 
@@ -21,11 +20,7 @@
   --white: #f8f4e9;
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
   background: radial-gradient(circle at 50% 0%, #21465b 0%, #0b1c2a 45%, #050b11 100%);
@@ -36,13 +31,10 @@ body {
   position: relative;
 }
 
-/* Fond étoilé animé */
 #stars-canvas {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
   pointer-events: none;
   z-index: 1;
 }
@@ -55,10 +47,7 @@ body {
   padding: 35px 0 70px;
 }
 
-header {
-  text-align: center;
-  margin-bottom: 25px;
-}
+header { text-align: center; margin-bottom: 25px; }
 
 h1 {
   font-family: Cinzel, serif;
@@ -95,7 +84,7 @@ h1 {
 
 .progress-fill {
   height: 100%;
-  width: 8.33%;
+  width: 0%;
   background: linear-gradient(90deg, #315d73, var(--gold), #f0d98d);
   transition: width 1s ease;
 }
@@ -106,7 +95,6 @@ h1 {
   color: #c9c0ac;
 }
 
-/* Style uniforme du parchemin pour éviter le changement de luminosité */
 .paper {
   background: var(--paper);
   color: var(--ink);
@@ -190,9 +178,7 @@ h1 {
   font-size: .85rem;
 }
 
-.hidden {
-  display: none !important;
-}
+.hidden { display: none !important; }
 
 .back {
   background: none;
@@ -205,9 +191,7 @@ h1 {
   transition: .2s;
 }
 
-.back:hover {
-  background: rgba(142, 117, 75, 0.15);
-}
+.back:hover { background: rgba(142, 117, 75, 0.15); }
 
 button {
   font-family: Cinzel, serif;
@@ -220,9 +204,7 @@ button {
   transition: .2s;
 }
 
-button:hover {
-  transform: translateY(-2px);
-}
+button:hover { transform: translateY(-2px); }
 
 .gold-btn {
   background: var(--gold);
@@ -230,11 +212,7 @@ button:hover {
   font-weight: bold;
 }
 
-.auth {
-  text-align: center;
-  max-width: 550px;
-  margin: auto;
-}
+.auth { text-align: center; max-width: 550px; margin: auto; }
 
 .auth h2 {
   font-family: Cinzel, serif;
@@ -242,10 +220,7 @@ button:hover {
   margin-bottom: 15px;
 }
 
-.auth p {
-  font-size: 1.15rem;
-  line-height: 1.7;
-}
+.auth p { font-size: 1.15rem; line-height: 1.7; }
 
 input {
   display: block;
@@ -268,10 +243,7 @@ input {
   margin-bottom: 15px;
 }
 
-.chapter-head {
-  text-align: center;
-  margin-bottom: 20px;
-}
+.chapter-head { text-align: center; margin-bottom: 20px; }
 
 .chapter-head .location {
   font-family: Cinzel, serif;
@@ -299,20 +271,11 @@ input {
   line-height: 1.9;
 }
 
-.story p {
-  margin-bottom: 20px;
-  text-align: justify;
-}
+.story p { margin-bottom: 20px; text-align: justify; }
 
-.story .dialogue {
-  margin-left: 18px;
-  text-align: left;
-}
+.story .dialogue { margin-left: 18px; text-align: left; }
 
-.story .thought {
-  font-style: italic;
-  color: #604f3e;
-}
+.story .thought { font-style: italic; color: #604f3e; }
 
 .clue {
   border-left: 4px solid var(--gold);
@@ -359,11 +322,9 @@ input {
 </head>
 
 <body>
-
 <canvas id="stars-canvas"></canvas>
 
 <div class="container">
-
 <header>
   <h1>L'ÉQUATION D'IRIS</h1>
 </header>
@@ -374,31 +335,25 @@ input {
     <div class="progress-fill" id="progressFill"></div>
   </div>
   <div class="progress-text">
-    Chapitre débloqué : <span id="progressNumber">1</span> sur 12
+    Chapitre débloqué : <span id="progressNumber">0</span> sur 12
   </div>
 </div>
 
-<!-- MENU -->
 <div id="menu" class="paper">
   <div class="section-title">Le Cinquième Sceau</div>
   <div class="section-subtitle">
     « Certaines routes conduisent à des lieux. Les meilleures conduisent à des vérités. »
   </div>
-
   <div class="chapter-grid" id="chapterGrid"></div>
-
   <div class="footer-note">
     Une seule porte à la fois. Le reste peut attendre.
   </div>
 </div>
 
-<!-- AUTH -->
 <div id="auth" class="paper hidden">
   <div class="auth">
     <button class="back" onclick="showMenu()">← Revenir au journal</button>
-
     <h2 id="authTitle">Déblocage du Chapitre</h2>
-
     <p>
       Cette étape n'est pas encore ouverte.
       <br><br>
@@ -406,33 +361,23 @@ input {
       <br>
       <em>À lui de décider quand le donner.</em>
     </p>
-
     <input id="codeInput" type="text" placeholder="MOT DE PASSE" autocomplete="off">
-
     <div id="error" class="error">
       Mauvais mot.
       <br>
       Même les grands stratèges ont parfois besoin de réviser leurs classiques.
     </div>
-
-    <button class="gold-btn" onclick="verifyCode()">
-      OUVRIR LE CHAPITRE
-    </button>
+    <button class="gold-btn" onclick="verifyCode()">OUVRIR LE CHAPITRE</button>
   </div>
 </div>
 
-<!-- CHAPITRE / LECTEUR -->
 <div id="reader" class="paper hidden">
-
   <button class="back" onclick="showMenu(); stopReading();">← Revenir au journal</button>
-
   <div class="chapter-head">
     <div class="location" id="chapterLocation"></div>
     <h2 id="chapterTitle"></h2>
     <div class="epigraph" id="chapterEpigraph"></div>
   </div>
-
-  <!-- LECTEUR AUDIO -->
   <div class="audio">
     <div style="margin-bottom:8px;font-family:Cinzel;font-size:0.9rem;letter-spacing:1px;color:var(--gold2)">
       ÉCOUTER LE CHAPITRE
@@ -440,16 +385,13 @@ input {
     <button onclick="readStory()" title="Lecture">▶</button>
     <button onclick="stopReading()" title="Arrêter">■</button>
   </div>
-
   <div class="story" id="story"></div>
-
 </div>
-
 </div>
 
 <script>
 /* ============================================================
-   CANVAS DE FOND ÉTOILÉ ANIMÉ
+   CANVAS ÉTOILÉ
    ============================================================ */
 const canvas = document.getElementById('stars-canvas');
 const ctx = canvas.getContext('2d');
@@ -494,9 +436,8 @@ window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
 animateStars();
 
-
 /* ============================================================
-   CODES DE DÉBLOCAGE
+   CODES
    ============================================================ */
 const CODES = {
   1: "AGORA",
@@ -514,136 +455,151 @@ const CODES = {
 };
 
 /* ============================================================
-   RÉCIT — LES 12 CHAPITRES
+   CHAPITRES
    ============================================================ */
 const chapters = [
 {
   number: 1,
-  city: "",
-  title: "L'Ombre de l'Acropole",
-  epigraph: "« Un secret n'est jamais enterré. Il attend simplement quelqu'un qui sache creuser au bon endroit. »",
+  city: "ATHÈNES",
+  title: "L'Ombre du Parthénon",
+  epigraph: "",
   text: `
-<p>Le soleil se couchait sur Athènes. Nous marchions l’un derrière l’autre, Orion devant, guidant comme toujours la voie, et moi, Callista, je le suivais de près, sur ses talons. Nous arrivions enfin à l’Acropole, après une journée harassante.</p>
-<p>La lumière dorée du crépuscule glissait sur les colonnes de marbre du Parthénon, découpant de longues ombres noires sur la pierre chaude. La ville sous nos pieds commençait à s'éteindre dans le murmure du soir, mais ici, au sommet, le silence était presque oppressant. Le vent frais de l'Attique balayait la poussière de nos tuniques et rafraîchissait nos visages brûlés par le trajet.</p>
-<p>Orion s'arrêta brusquement. Il leva la main pour me faire signe de ne plus bouger.</p>
-<p class="dialogue">— Qu'est-ce qu'il y a ? chuchotai-je en ajustant la lanière de mon sac de toile.</p>
-<p class="dialogue">— On ne nous a pas attendus, répondit-il d'une voix basse, sans se retourner.</p>
-<p>Je dépassai son épaule pour regarder. Au pied de la statue d'Athéna, l'accès à la petite crypte sous les dalles était ouvert. La grille en fer forgé, d'ordinaire scellée, pendait hors de ses gonds, tordue.</p>
-<p>Je sentis un frisson me traverser le dos. La relique d'Éleusis que nous transportions n'était que la moitié du puzzle. L'autre moitié — le registre révélant l'emplacement du Cinquième Sceau — était censée reposer à l'abri sous ces dalles.</p>
-<p class="dialogue">— Tu penses que ce sont les Ombres ? demandai-je en posant instinctivement la main sur la dague à ma ceinture.</p>
-<p>Orion s'accroupit près de la grille, observant les traces dans la poussière. Un détail attira son attention : une marque fraîche gravée à même la pierre, sous la charnière tordue. Trois lignes entrelacées formant une fleur stylisée.</p>
-<p class="dialogue">— Non, dit-il en redressant la tête avec un regard où se mêlaient la surprise et l'inquiétude. Pas les Ombres. Iris. Elle est passée ici il y a moins de deux heures, et elle nous a laissé un message.</p>
-<p>Orion n'hésita pas. Il glissa sa main dans l'ouverture, écarta la grille brisée dans un grincement étouffé et s'engouffra le premier dans l'escalier de pierre qui s'enfonçait sous le temple. Je le suivis sans attendre. L'air y était lourd, frais, saturé d'une odeur de poussière antique et de cire brûlée. À la lueur de la faible lanterne qu'Orion alluma, les parois de marbre semblaient suinter de mystère.</p>
-<p>Au centre de la petite salle souterraine, un autel de pierre se dressait. Dessus, le coffre en bronze qui devait protéger le registre était grand ouvert, vide. Mais à côté, gravé à la hâte avec la pointe d'une lame, se trouvait le message d'Iris :</p>
+<p>Il existe des hommes dont on comprend immédiatement la place dans le monde.</p>
+
+<p>Les rois ont leurs palais, les généraux leurs armées, les savants leurs bibliothèques et les prêtres leurs temples. Même les hommes dangereux finissent généralement par révéler la nature de leur danger : ils parlent trop fort, portent leurs ambitions comme des bijoux ou regardent les autres avec cette impatience particulière de ceux qui se croient déjà arrivés.</p>
+
+<p>Atlas n'appartenait à aucune de ces catégories.</p>
+
+<p>Il n'avait ni titre, ni domaine, ni suite de serviteurs. Il voyageait avec quelques vêtements, des cartes soigneusement roulées dans une housse de cuir et un carnet dont il refusait de me laisser lire certaines pages. Il ne cherchait jamais à attirer l'attention et, pourtant, les conversations avaient tendance à ralentir lorsqu'il entrait quelque part. Les hommes ne savaient pas toujours pourquoi ils le regardaient. Moi, je le savais.</p>
+
+<p>Atlas observait.</p>
+
+<p>Avant de regarder une porte, il regardait celui qui l'avait ouverte. Avant d'étudier une carte, il cherchait à comprendre celui qui l'avait dessinée. Lorsqu'un homme lui parlait, il accordait autant d'importance aux silences entre ses phrases qu'aux mots eux-mêmes.</p>
+
+<p>À vingt ans, je croyais que cette attention permanente était une forme de méfiance. Je découvrirais plus tard qu'il s'agissait surtout d'une manière particulière de comprendre le monde : Atlas refusait de considérer quoi que ce soit comme insignifiant.</p>
+
+<p>Nous arrivâmes à Athènes au matin.</p>
+
+<p>La ville était déjà éveillée. Des marchands installaient leurs étals dans la poussière, des ânes chargés de paniers forçaient les passants à se ranger contre les murs et les voix montaient des ruelles comme une rumeur continue. Au-dessus des maisons, l'Acropole dominait la cité, baignée par une lumière claire qui faisait ressortir les colonnes du Parthénon.</p>
+
+<p>Je m'arrêtai pour regarder.</p>
+
+<p>Atlas fit encore quelques pas avant de se retourner.</p>
+
+<p>Il suivit mon regard vers le temple, puis observa la foule qui circulait autour de nous.</p>
+
+<p class="dialogue">— Tu ne regardes pas le Parthénon ?</p>
+
+<p class="dialogue">— Il sera encore là dans une heure.</p>
+
+<p>Je souris malgré moi. C'était une réponse typiquement atlasienne.</p>
+
+<p>Nous descendîmes vers l'Agora.</p>
+
+<p>Trois semaines auparavant, un pli sans signature était arrivé à notre porte. Il ne contenait que trois lignes :</p>
+
 <div class="clue">
-« Le Sceau ne protège pas un trésor, il protège un mensonge. Rejoignez-moi à Delphes avant que les Ombres ne comprennent ce que vous portez. »
+ATHÈNES.<br>
+LÀ OÙ TOUT COMMENCE.<br>
+CHERCHEZ CE QUI EST RESTÉ.
 </div>
-<p class="dialogue">— Un mensonge... répétai-je à voix basse. Qu'est-ce que ça veut dire ?</p>
-<p class="dialogue">— Ça veut dire que toute notre quête repose sur une illusion, répondit Orion, la voix sombre.</p>
-<p>Avant même que je puisse lui demander d'en dire plus, un bruit métallique résonna au-dessus de nous, suivi du choc d'une sandale sur les marches de pierre.</p>
-<p class="thought">Clac. Clac.</p>
-<p>Quelqu'un descendait. Orion éteignit la lanterne d'un geste sec, nous plongeant instantanément dans une obscurité totale. Il me tira doucement par le bras pour me coller contre le renfoncement d'une colonne. Sa main se posa sur la garde de son glaive.</p>
-<p>En haut des marches, une silhouette grande, drapée d'un lourd manteau sombre, se découpa contre la lumière mourante du dehors.</p>
-<p class="dialogue">— Je sais que vous êtes là, Orion, déclara une voix grave qui fit résonner les murs. Rends-moi le morceau d'Éleusis, et je te laisserai quitter Athènes vivant.</p>
-<p>Orion ne bougea pas d'un pouce. Dans le noir, sa voix s'éleva, calme et détachée :</p>
-<p class="dialogue">— Tu es bien loin de tes terres pour venir réclamer du bronze dans les ruines d'Athènes. Lysandre... Les Ombres envoient donc leurs meilleurs chiens de chasse désormais. Mais si vous cherchez le morceau d'Éleusis avec autant de hâte, c'est que vous avez compris que le registre sous cet autel est vide. Iris a toujours eu trois coups d'avance sur vous.</p>
-<p>Un rire sec et sans joie sortit de la pénombre.</p>
-<p class="dialogue">— Iris est une fugitive, cracha Lysandre en faisant un pas de plus. Elle croit manipuler le destin avec ses petites énigmes. Mais sans le Cinquième Sceau, sa « vérité » n'est qu'un chiffon de papier. Donne-moi le fragment, Callista. Je sais que tu le portes dans ton sac.</p>
-<p>Je sursautai dans le noir, serrant le sac contre mon flanc.</p>
-<p class="dialogue">— Elle ne te donnera rien, intervint Orion pour masquer ma position. Mais dis-moi ce que les Ombres espèrent accomplir à Delphes. La Pythie ne vend plus ses oracles à des mercenaires.</p>
-<p class="dialogue">— Delphes n'est qu'une étape. La Pythie dira ce que nous lui ordonnerons de dire, et les cités grecques s'entre-déchireront avant la fin de la lune.</p>
-<p>À mes côtés, je sentis Orion se tendre. Le silence se figea quand Lysandre tira lentement sa lame du fourreau.</p>
-<p class="dialogue">— Callista... chuchota Orion, si bas que seule moi pouvais l'entendre. Prépare-toi.</p>
-<p>En un éclair, Orion saisit sa propre lame et bondit hors du renfoncement. Le choc de l'acier contre l'acier résonna dans la crypte avec le fracas d'un coup de tonnerre, faisant voler des étincelles qui éclairèrent un instant les visages crispés des deux hommes.</p>
-<p class="dialogue">— Cours ! me harla Orion en repoussant l'assaut brut de Lysandre.</p>
-<p>Je n'hésitai pas une seconde. Pressant le sac de toile contenant le fragment contre ma poitrine, je m'élançai vers l'escalier. Lysandre tenta de couper ma trajectoire d'un revers de lame, mais Orion s'interposa avec hargne, bloquant l'attaque et forçant son adversaire à reculer vers l'autel.</p>
-<p>Je franchis les marches quatre à quatre, le cœur battant à rompre dans ma poitrine. En déboulant à l'air libre sur l'esplanade du Parthénon, le vent de la nuit frappa mon visage. Derrière moi, sous la terre, les bruits de ferraille et les coups étouffés continuaient de résonner.</p>
-<p>Seule dans la nuit tombante d'Athènes, le fragment sur le dos, je savais ce qui me restait à faire : trouver un moyen de fuir la cité et prendre la route de Delphes, en priant pour qu'Orion me rejoigne vivant.</p>
+
+<p>Atlas avait reconnu le pli avant même de lire le message. Je lui avais demandé qui l'avait envoyé. Il avait simplement répondu :</p>
+
+<p class="dialogue">— Une personne qui espère que je me souvienne.</p>
+
+<p>C'était la première fois qu'il prononçait le nom d'Iris.</p>
+
+<p>Depuis sa disparition, les récits à son sujet s'étaient multipliés. Certains la décrivaient comme une conseillère politique, d'autres comme une espionne, d'autres encore comme une stratège capable de prévoir les alliances avant même que leurs protagonistes aient décidé de les conclure.</p>
+
+<p>Tous, cependant, parlaient du Cinquième Sceau.</p>
+
+<p>Personne ne savait réellement ce que c'était. Pour les marchands, c'était un trésor. Pour certains soldats, une arme. Pour les érudits, une connaissance suffisamment dangereuse pour modifier l'équilibre entre les cités.</p>
+
+<p>Atlas ne prétendait pas savoir lequel de ces récits était vrai. Il disait seulement qu'une chose dont personne ne connaissait la forme pouvait devenir tout ce que les hommes désiraient ou craignaient. Notre tâche, selon lui, n'était donc pas de croire les rumeurs. C'était de découvrir qui les avait créées.</p>
+
+<p>Nous passâmes la matinée dans l'Agora. Je prenais des notes pendant qu'Atlas observait les mouvements de la place. Au bout d'une heure, il m'indiqua un homme qui avait changé trois fois de position sans jamais quitter des yeux l'entrée d'un bâtiment administratif. Je l'avais vu. Je n'avais pas compris pourquoi cela avait de l'importance.</p>
+
+<p>Atlas me demanda ensuite de regarder deux marchands qui discutaient près d'un étal de poteries. Ils semblaient se disputer à propos du prix d'une amphore. Puis il me demanda lequel des deux mentait. Je répondis que je n'en savais rien. Il me demanda de regarder leurs mains : le plus âgé tenait son argent dans la main gauche, mais lorsqu'il mentait, son pouce droit frottait machinalement l'ongle de son index. Je n'avais pas remarqué ce geste.</p>
+
+<p>Atlas sourit.</p>
+
+<p class="dialogue">— Tu regardes ce qu'ils font. Il faut aussi regarder ce qu'ils essaient de ne pas faire.</p>
+
+<p>Ce fut la première leçon que je notai dans mon carnet.</p>
+
+<p>Nous ne trouvâmes rien d'intéressant avant le milieu de l'après-midi. Puis Atlas s'arrêta devant un petit étal de vieux bronzes. Le marchand était un homme nerveux qui parlait beaucoup trop pour quelqu'un qui n'avait rien à cacher.</p>
+
+<p>Atlas lui demanda d'où provenait une série de fragments métalliques posés sur une étoffe. L'homme répondit qu'ils avaient été trouvés dans une ancienne maison administrative.</p>
+
+<p>Atlas en prit un. Il était presque entièrement recouvert de corrosion, mais cinq petites marques étaient encore visibles sur sa surface. Quatre étaient identiques. La cinquième était inversée.</p>
+
+<p>Atlas me tendit le fragment.</p>
+
+<p class="dialogue">— Qu'est-ce que tu vois ?</p>
+
+<p>Je l'examinai longuement.</p>
+
+<p class="dialogue">— Cinq marques. Quatre identiques et une différente.</p>
+
+<p class="dialogue">— Et ?</p>
+
+<p>Je regardai de nouveau. Les quatre premières étaient orientées vers le haut. La dernière vers le bas.</p>
+
+<p class="dialogue">— Ce n'est pas une décoration.</p>
+
+<p>Atlas hocha la tête. Le marchand, derrière nous, venait de cesser de parler. Je le remarquai cette fois. Atlas aussi. Il reposa le fragment et nous quittâmes l'étal sans l'acheter.</p>
+
+<p>Une fois dans la rue, il m'expliqua ce qui l'avait intrigué : les marques ressemblaient à celles utilisées sur certains documents administratifs pour identifier leur origine. Mais l'inversion de la dernière ne correspondait à aucun système officiel qu'il connaissait.</p>
+
+<p class="dialogue">— Alors pourquoi nous le montrer ?</p>
+
+<p class="dialogue">— Parce que ce n'est probablement pas pour nous.</p>
+
+<p>Je le regardai. Il désigna discrètement le marchand. L'homme nous observait depuis son étal. Quelques instants plus tard, il se retourna et disparut dans la foule.</p>
+
+<p>Nous le suivîmes. Il traversa l'Agora, prit une ruelle étroite et entra dans une petite cour où un autre homme l'attendait. Nous ne pûmes entendre leur conversation, mais nous vîmes le fragment changer de mains.</p>
+
+<p>Atlas ne bougea pas. Il observa simplement l'homme qui venait de le recevoir. Puis son regard descendit vers ses sandales.</p>
+
+<p class="dialogue">— Nous rentrons.</p>
+
+<p>Je crus qu'il avait abandonné. Ce ne fut qu'une fois à l'auberge qu'il sortit une carte de Grèce. Il posa son doigt sur Delphes.</p>
+
+<p class="dialogue">— Pourquoi là-bas ?</p>
+
+<p>Il me regarda quelques secondes avant de répondre.</p>
+
+<p class="dialogue">— Parce que cet homme porte des sandales fabriquées dans la région de Phocide. Et parce qu'il n'avait aucune raison de venir à Athènes pour acheter un fragment qu'il possédait déjà.</p>
+
+<p>Je compris alors qu'Atlas n'avait pas besoin de savoir ce qu'était le Cinquième Sceau : il lui suffisait de savoir que quelqu'un d'autre le cherchait.</p>
+
+<p>Avant de ranger la carte, il retourna le morceau de bronze qu'il avait dessiné dans son carnet. Au dos, presque invisible sous la corrosion, une petite fleur à cinq pétales apparaissait : le symbole d'Iris. Je le regardai longtemps.</p>
+
+<p>Atlas referma son carnet. Le lendemain, nous prendrions la route de Delphes.</p>
+
+<p>À cette époque, je pensais encore que nous étions simplement partis à la recherche d'un objet perdu. Je ne savais pas ce qui nous attendait dans les montagnes. Je savais seulement une chose : quelque part, à Athènes, quelqu'un avait reçu le même message que nous.</p>
+
+<p>Et cette personne avait pris de l'avance.</p>
 `
 },
-{
-  number: 2,
-  city: "",
-  title: "",
-  epigraph: "",
-  text: `<p>Texte du chapitre 2 à venir...</p>`
-},
-{
-  number: 3,
-  city: "",
-  title: "",
-  epigraph: "",
-  text: `<p>Texte du chapitre 3 à venir...</p>`
-},
-{
-  number: 4,
-  city: "",
-  title: "",
-  epigraph: "",
-  text: `<p>Texte du chapitre 4 à venir...</p>`
-},
-{
-  number: 5,
-  city: "",
-  title: "",
-  epigraph: "",
-  text: `<p>Texte du chapitre 5 à venir...</p>`
-},
-{
-  number: 6,
-  city: "",
-  title: "",
-  epigraph: "",
-  text: `<p>Texte du chapitre 6 à venir...</p>`
-},
-{
-  number: 7,
-  city: "",
-  title: "",
-  epigraph: "",
-  text: `<p>Texte du chapitre 7 à venir...</p>`
-},
-{
-  number: 8,
-  city: "",
-  title: "",
-  epigraph: "",
-  text: `<p>Texte du chapitre 8 à venir...</p>`
-},
-{
-  number: 9,
-  city: "",
-  title: "",
-  epigraph: "",
-  text: `<p>Texte du chapitre 9 à venir...</p>`
-},
-{
-  number: 10,
-  city: "",
-  title: "",
-  epigraph: "",
-  text: `<p>Texte du chapitre 10 à venir...</p>`
-},
-{
-  number: 11,
-  city: "",
-  title: "",
-  epigraph: "",
-  text: `<p>Texte du chapitre 11 à venir...</p>`
-},
-{
-  number: 12,
-  city: "",
-  title: "",
-  epigraph: "",
-  text: `<p>Texte du chapitre 12 à venir...</p>`
-}
+{ number: 2, city: "", title: "", epigraph: "", text: `<p>Chapitre 2 à venir...</p>` },
+{ number: 3, city: "", title: "", epigraph: "", text: `<p>Chapitre 3 à venir...</p>` },
+{ number: 4, city: "", title: "", epigraph: "", text: `<p>Chapitre 4 à venir...</p>` },
+{ number: 5, city: "", title: "", epigraph: "", text: `<p>Chapitre 5 à venir...</p>` },
+{ number: 6, city: "", title: "", epigraph: "", text: `<p>Chapitre 6 à venir...</p>` },
+{ number: 7, city: "", title: "", epigraph: "", text: `<p>Chapitre 7 à venir...</p>` },
+{ number: 8, city: "", title: "", epigraph: "", text: `<p>Chapitre 8 à venir...</p>` },
+{ number: 9, city: "", title: "", epigraph: "", text: `<p>Chapitre 9 à venir...</p>` },
+{ number: 10, city: "", title: "", epigraph: "", text: `<p>Chapitre 10 à venir...</p>` },
+{ number: 11, city: "", title: "", epigraph: "", text: `<p>Chapitre 11 à venir...</p>` },
+{ number: 12, city: "", title: "", epigraph: "", text: `<p>Chapitre 12 à venir...</p>` }
 ];
 
 /* ============================================================
-   LOGIQUE DE NAVIGATION ET DE GESTION DES CHAPITRES
+   LOGIQUE
    ============================================================ */
-let unlockedChapter = parseInt(localStorage.getItem('unlockedChapter')) || 1;
+let unlockedChapter = parseInt(localStorage.getItem('unlockedChapter')) || 0;
 let selectedChapter = null;
 let currentUtterance = null;
 
@@ -677,10 +633,8 @@ function renderGrid() {
 function handleChapterClick(number) {
   if (number <= unlockedChapter) {
     openReader(number);
-  } else if (number === unlockedChapter + 1) {
-    openAuth(number);
   } else {
-    alert("Vous devez débloquer les chapitres précédents dans l'ordre !");
+    openAuth(number);
   }
 }
 
@@ -732,9 +686,6 @@ function showMenu() {
   document.getElementById('menu').classList.remove('hidden');
 }
 
-/* ============================================================
-   SYNTHÈSE VOCALE (LECTEUR AUDIO)
-   ============================================================ */
 function readStory() {
   stopReading();
   const storyElement = document.getElementById('story');
@@ -756,10 +707,8 @@ function stopReading() {
   }
 }
 
-/* Initialisation au chargement */
 updateProgressUI();
 renderGrid();
 </script>
-
 </body>
 </html>
