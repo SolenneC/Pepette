@@ -106,7 +106,7 @@ h1 {
   color: #c9c0ac;
 }
 
-/* Style uniforme du parchemin pour éviter le changement de luminosité */
+/* Style uniforme du parchemin */
 .paper {
   background: var(--paper);
   color: var(--ink);
@@ -378,6 +378,7 @@ input {
   </div>
 </div>
 
+<!-- MENU -->
 <div id="menu" class="paper">
   <div class="section-title">Le Cinquième Sceau</div>
   <div class="section-subtitle">
@@ -391,6 +392,7 @@ input {
   </div>
 </div>
 
+<!-- AUTH -->
 <div id="auth" class="paper hidden">
   <div class="auth">
     <button class="back" onclick="showMenu()">← Revenir au journal</button>
@@ -419,6 +421,7 @@ input {
   </div>
 </div>
 
+<!-- CHAPITRE / LECTEUR -->
 <div id="reader" class="paper hidden">
 
   <button class="back" onclick="showMenu(); stopReading();">← Revenir au journal</button>
@@ -429,6 +432,7 @@ input {
     <div class="epigraph" id="chapterEpigraph"></div>
   </div>
 
+  <!-- LECTEUR AUDIO -->
   <div class="audio">
     <div style="margin-bottom:8px;font-family:Cinzel;font-size:0.9rem;letter-spacing:1px;color:var(--gold2)">
       ÉCOUTER LE CHAPITRE
@@ -492,10 +496,9 @@ animateStars();
 
 
 /* ============================================================
-   CODES DE DÉBLOCAGE
+   CODES DE DÉBLOCAGE (du Chapitre 2 au Chapitre 12)
    ============================================================ */
 const CODES = {
-  1: "AGORA",
   2: "PYTHIE",
   3: "FRESQUE",
   4: "OLYMPIE",
@@ -525,7 +528,9 @@ const chapters = [
 
 <p>Atlas n'appartenait à aucune de ces catégories.</p>
 
-<p>Il n'avait ni titre, ni domaine, ni suite de serviteurs. Il voyageait avec quelques vêtements, des cartes soigneusement roulées dans une housse de cuir et un carnet dont il refusait de me laisser lire certaines pages. Il ne cherchait jamais à attirer l'attention et, pourtant, les conversations avaient tendance à ralentir lorsqu'il entrait quelque part. Les hommes ne savaient pas toujours pourquoi ils le regardaient. Moi, je le savais.</p>
+<p>Il n'avait ni titre, ni domaine, ni suite de serviteurs. Il voyageait avec quelques vêtements, des cartes soigneusement roulées dans une housse de cuir et un carnet dont il refusait de me laisser lire certaines pages. Il ne cherchait jamais à attirer l'attention et, pourtant, les conversations avaient tendance à ralentir lorsqu'il entrait quelque part. Les hommes ne savaient pas toujours pourquoi ils le regardaient.</p>
+
+<p>Moi, je le savais.</p>
 
 <p>Atlas observait.</p>
 
@@ -539,15 +544,15 @@ const chapters = [
 
 <p>Je m'arrêtai pour regarder.</p>
 
-<p>Atlas fit encore quelques pas avant de se retourner.</p>
-
-<p>Il suivit mon regard vers le temple, puis observa la foule qui circulait autour de nous.</p>
+<p>Atlas fit encore quelques pas avant de se retourner. Il suivit mon regard vers le temple, puis observa la foule qui circulait autour de nous.</p>
 
 <p class="dialogue">— Tu ne regardes pas le Parthénon ?</p>
 
 <p class="dialogue">— Il sera encore là dans une heure.</p>
 
-<p>Je souris malgré moi. C'était une réponse typiquement atlasienne.</p>
+<p>Je souris malgré moi.</p>
+
+<p>C'était une réponse typiquement atlasienne.</p>
 
 <p>Nous descendîmes vers l'Agora.</p>
 
@@ -571,9 +576,13 @@ CHERCHEZ CE QUI EST RESTÉ.
 
 <p>Personne ne savait réellement ce que c'était. Pour les marchands, c'était un trésor. Pour certains soldats, une arme. Pour les érudits, une connaissance suffisamment dangereuse pour modifier l'équilibre entre les cités.</p>
 
-<p>Atlas ne prétendait pas savoir lequel de ces récits était vrai. Il disait seulement qu'une chose dont personne ne connaissait la forme pouvait devenir tout ce que les hommes désiraient ou craignaient. Notre tâche, selon lui, n'était donc pas de croire les rumeurs. C'était de découvrir qui les avait créées.</p>
+<p>Atlas ne prétendait pas savoir lequel de ces récits était vrai. Il disait seulement qu'une chose dont personne ne connaissait la forme pouvait devenir tout ce que les hommes désiraient ou craignaient.</p>
 
-<p>Nous passâmes la matinée dans l'Agora. Je prenais des notes pendant qu'Atlas observait les mouvements de la place. Au bout d'une heure, il m'indiqua un homme qui avait changé trois fois de position sans jamais quitter des yeux l'entrée d'un bâtiment administratif. Je l'avais vu. Je n'avais pas compris pourquoi cela avait de l'importance.</p>
+<p>Notre tâche, selon lui, n'était donc pas de croire les rumeurs. C'était de découvrir qui les avait créées.</p>
+
+<p>Nous passâmes la matinée dans l'Agora. Je prenais des notes pendant qu'Atlas observait les mouvements de la place. Au bout d'une heure, il m'indiqua un homme qui avait changé trois fois de position sans jamais quitter des yeux l'entrée d'un bâtiment administratif.</p>
+
+<p>Je l'avais vu. Je n'avais pas compris pourquoi cela avait de l'importance.</p>
 
 <p>Atlas me demanda ensuite de regarder deux marchands qui discutaient près d'un étal de poteries. Ils semblaient se disputer à propos du prix d'une amphore. Puis il me demanda lequel des deux mentait. Je répondis que je n'en savais rien. Il me demanda de regarder leurs mains : le plus âgé tenait son argent dans la main gauche, mais lorsqu'il mentait, son pouce droit frottait machinalement l'ongle de son index. Je n'avais pas remarqué ce geste.</p>
 
@@ -581,11 +590,11 @@ CHERCHEZ CE QUI EST RESTÉ.
 
 <p class="dialogue">— Tu regardes ce qu'ils font. Il faut aussi regarder ce qu'ils essaient de ne pas faire.</p>
 
-<p>Ce fut la première leçon que je notai dans mon carnet.</p>
+<p>Je notai la phrase dans mon carnet.</p>
 
 <p>Nous ne trouvâmes rien d'intéressant avant le milieu de l'après-midi. Puis Atlas s'arrêta devant un petit étal de vieux bronzes. Le marchand était un homme nerveux qui parlait beaucoup trop pour quelqu'un qui n'avait rien à cacher.</p>
 
-<p>Atlas lui demanda d'où provenait une série de fragments métalliques posés sur une étoffe. L'homme répondit qu'ils avaient été trouvés dans une ancienne maison administrative.</p>
+<p>Atlas lui demanda d'où provenaient les fragments métalliques disposés sur une étoffe. L'homme répondit qu'ils avaient été trouvés dans une ancienne maison administrative.</p>
 
 <p>Atlas en prit un. Il était presque entièrement recouvert de corrosion, mais cinq petites marques étaient encore visibles sur sa surface. Quatre étaient identiques. La cinquième était inversée.</p>
 
@@ -599,43 +608,103 @@ CHERCHEZ CE QUI EST RESTÉ.
 
 <p class="dialogue">— Et ?</p>
 
-<p>Je regardai de nouveau. Les quatre premières étaient orientées vers le haut. La dernière vers le bas.</p>
+<p>Je tournai légèrement le bronze entre mes doigts. La lumière du soleil glissa sur les reliefs minuscules. Les quatre premières étaient orientées vers le haut. La dernière vers le bas.</p>
 
 <p class="dialogue">— Ce n'est pas une décoration.</p>
 
-<p>Atlas hocha la tête. Le marchand, derrière nous, venait de cesser de parler. Je le remarquai cette fois. Atlas aussi. Il reposa le fragment et nous quittâmes l'étal sans l'acheter.</p>
+<p>Atlas hocha la tête. Le marchand, derrière nous, venait de cesser de parler. Je levai les yeux vers lui. Son sourire avait disparu.</p>
 
-<p>Une fois dans la rue, il m'expliqua ce qui l'avait intrigué : les marques ressemblaient à celles utilisées sur certains documents administratifs pour identifier leur origine. Mais l'inversion de la dernière ne correspondait à aucun système officiel qu'il connaissait.</p>
+<p>Atlas me reprit doucement le fragment des mains et le reposa sur l'étoffe. Nous quittâmes l'étal sans acheter quoi que ce soit.</p>
 
-<p class="dialogue">— Alors pourquoi nous le montrer ?</p>
+<p>Une fois dans la rue, il marcha quelques pas avant de parler.</p>
 
-<p class="dialogue">— Parce que ce n'est probablement pas pour nous.</p>
+<p class="dialogue">— Qu'est-ce qui t'a paru étrange ?</p>
 
-<p>Je le regardai. Il désigna discrètement le marchand. L'homme nous observait depuis son étal. Quelques instants plus tard, il se retourna et disparut dans la foule.</p>
+<p class="dialogue">— Le fragment ?</p>
 
-<p>Nous le suivîmes. Il traversa l'Agora, prit une ruelle étroite et entra dans une petite cour où un autre homme l'attendait. Nous ne pûmes entendre leur conversation, mais nous vîmes le fragment changer de mains.</p>
+<p class="dialogue">— Le marchand.</p>
 
-<p>Atlas ne bougea pas. Il observa simplement l'homme qui venait de le recevoir. Puis son regard descendit vers ses sandales.</p>
+<p>Je réfléchis.</p>
 
-<p class="dialogue">— Nous rentrons.</p>
+<p class="dialogue">— Il parlait trop.</p>
 
-<p>Je crus qu'il avait abandonné. Ce ne fut qu'une fois à l'auberge qu'il sortit une carte de Grèce. Il posa son doigt sur Delphes.</p>
+<p class="dialogue">— Tout le monde parle trop quand il a peur de ne pas être cru.</p>
 
-<p class="dialogue">— Pourquoi là-bas ?</p>
+<p>Je me retournai. L'homme nous regardait depuis son étal. Il détourna aussitôt les yeux.</p>
 
-<p>Il me regarda quelques secondes avant de répondre.</p>
+<p>Nous restâmes dans les environs. Le soleil descendit lentement derrière les bâtiments de l'Agora et les ombres commencèrent à s'étirer sur les dalles. Les marchands rangeaient leurs marchandises. Les voix devenaient moins nombreuses. Athènes changeait de visage sans cesser d'être la même ville.</p>
 
-<p class="dialogue">— Parce que cet homme porte des sandales fabriquées dans la région de Phocide. Et parce qu'il n'avait aucune raison de venir à Athènes pour acheter un fragment qu'il possédait déjà.</p>
+<p>Peu avant la tombée du jour, le marchand quitta enfin son étal. Il ne rentra pas chez lui. Il traversa l'Agora, prit une ruelle étroite et disparut derrière une petite cour.</p>
 
-<p>Je compris alors qu'Atlas n'avait pas besoin de savoir ce qu'était le Cinquième Sceau : il lui suffisait de savoir que quelqu'un d'autre le cherchait.</p>
+<p>Nous le suivîmes à distance. Un autre homme l'attendait. La conversation fut brève. Le marchand sortit quelque chose de sa tunique : le fragment de bronze. L'autre homme le prit.</p>
 
-<p>Avant de ranger la carte, il retourna le morceau de bronze qu'il avait dessiné dans son carnet. Au dos, presque invisible sous la corrosion, une petite fleur à cinq pétales apparaissait : le symbole d'Iris. Je le regardai longtemps.</p>
+<p>Je distinguai son visage lorsque la dernière lumière du jour toucha la cour. Une cicatrice lui traversait la joue gauche. Il ne regarda pas le marchand : il regarda autour de lui. Son regard passa sur la fenêtre derrière laquelle nous étions dissimulés.</p>
 
-<p>Atlas referma son carnet. Le lendemain, nous prendrions la route de Delphes.</p>
+<p>Je retins mon souffle. Atlas posa une main sur mon bras. Nous ne bougeâmes pas. L'homme finit par se détourner et quitta la cour.</p>
 
-<p>À cette époque, je pensais encore que nous étions simplement partis à la recherche d'un objet perdu. Je ne savais pas ce qui nous attendait dans les montagnes. Je savais seulement une chose : quelque part, à Athènes, quelqu'un avait reçu le même message que nous.</p>
+<p>J'attendis qu'il ait disparu avant de murmurer :</p>
 
-<p>Et cette personne avait pris de l'avance.</p>
+<p class="dialogue">— On le suit ?</p>
+
+<p class="dialogue">— Non.</p>
+
+<p class="dialogue">— Pourquoi ?</p>
+
+<p>Atlas regardait encore la rue vide.</p>
+
+<p class="dialogue">— Parce qu'il veut être suivi.</p>
+
+<p>Il y eut un silence. Puis il ajouta :</p>
+
+<p class="dialogue">— Et parce qu'il a fait une erreur.</p>
+
+<p>Je le regardai.</p>
+
+<p class="dialogue">— Laquelle ?</p>
+
+<p>Atlas baissa les yeux vers la rue.</p>
+
+<p class="dialogue">— Ses sandales.</p>
+
+<p>Je ne compris pas. Il me fit signe de rentrer.</p>
+
+<p>Nous regagnâmes l'auberge alors que les premières lanternes s'allumaient dans les rues. Athènes était devenue plus silencieuse, mais pas plus calme. Il y avait dans l'air cette tension particulière des villes où trop de gens savent quelque chose que les autres ignorent.</p>
+
+<p>Dans notre chambre, Atlas déroula la carte de la Grèce sur la table. Il resta longtemps penché dessus. Je savais qu'il ne cherchait pas simplement une route : il reconstruisait celle de l'homme que nous venions de voir.</p>
+
+<p class="dialogue">— La Phocide, dis-je finalement.</p>
+
+<p>Atlas leva les yeux.</p>
+
+<p class="dialogue">— Pourquoi ?</p>
+
+<p class="dialogue">— Les sandales. Le cuir n'est pas athénien. Et la manière dont les lanières sont fixées… j'ai déjà vu cela sur des voyageurs venant du nord.</p>
+
+<p>Il me regarda quelques secondes. Puis un sourire apparut au coin de sa bouche.</p>
+
+<p class="dialogue">— Tu progresses.</p>
+
+<p>Sur la carte, son doigt se posa enfin sur une ville : Delphes.</p>
+
+<p>Avant de fermer son carnet, Atlas reprit le dessin qu'il avait fait du fragment. Je m'approchai. Sous les cinq marques, il avait ajouté un détail que je n'avais pas remarqué dans la boutique : une petite fleur à cinq pétales, presque effacée par la corrosion. Le symbole d'Iris.</p>
+
+<p>Je restai silencieuse. Atlas aussi.</p>
+
+<p>Pendant quelques secondes, la chambre sembla soudain beaucoup trop petite pour contenir toutes les questions que ce simple dessin venait de faire naître.</p>
+
+<p>Pourquoi Iris avait-elle laissé son symbole sur un morceau de bronze vendu par un marchand qui prétendait ne rien savoir ? Pourquoi cet homme était-il venu chercher le fragment ? Et surtout, pourquoi Atlas avait-il reconnu le symbole avant même de me permettre de le voir ?</p>
+
+<p>Je voulus lui poser la question. Je ne le fis pas. Il y avait des silences que l'on pouvait briser, et d'autres que l'on regrettait d'avoir brisés.</p>
+
+<p>Atlas replia la carte avec le même soin qu'il mettait toujours à ranger les choses auxquelles il accordait de l'importance. Puis il éteignit la lampe.</p>
+
+<p>Dans l'obscurité, j'entendis le cuir de sa housse se refermer et le froissement de ses cartes. Athènes dormait derrière les murs.</p>
+
+<p>Quelque part dans cette immense cité, un homme que nous n'avions jamais rencontré possédait désormais le premier morceau de notre piste. Et au-delà des montagnes, Delphes nous attendait.</p>
+
+<p>Je ne savais pas encore ce que nous allions y trouver. Je savais seulement que, pour la première fois depuis longtemps, Atlas avait cessé de regarder la route comme un homme qui connaissait déjà sa destination.</p>
+
+<p>Le lendemain, nous partirions pour Delphes.</p>
 `
 },
 {
